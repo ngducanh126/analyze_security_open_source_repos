@@ -1,0 +1,28 @@
+Getting general information 
+Repository: freeCodeCamp/freeCodeCamp
+Description: freeCodeCamp.org's open-source codebase and curriculum. Learn to code for free.
+Stars: 395372
+Forks: 36358
+Watchers: 395372
+Primary language: TypeScript
+----------------
+SEARCHING COMMITS 
+Total commits analyzed: 100
+Top 5 contributors:
+  Oliver Eyton-Williams: 29 commits
+  freeCodeCamp's Camper Bot: 12 commits
+  Gagan Bhullar: 10 commits
+  Lasse Jørgensen: 9 commits
+  Tom: 7 commits
+Oldest commit: 2024-07-09 05:18:40
+Most recent commit: 2024-07-26 15:12:11
+----------------
+SEARCHING ISSUES
+Total issues analyzed: 100
+Open issues: 49
+Closed issues: 51
+----------------
+SEARCHING PRS
+Total pull requests analyzed: 100
+Open pull requests: 48
+Closed pull requests: 52
