@@ -26,3 +26,18 @@ def fetch_closed_security_issues(owner, repo):
     else:
         print("Failed to fetch issues.")
 
+def fetch_security_prs(owner, repo):
+    """Fetch pull requests with security in the title."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/pulls"
+    params = {'state': 'all', 'per_page': 100}
+    resp = requests.get(url, params=params)
+    if resp.status_code == 200:
+        prs = resp.json()
+        sec_prs = [pr for pr in prs if 'security' in pr['title'].lower()]
+        print(f"Security-related PRs: {len(sec_prs)}")
+        for pr in sec_prs:
+            print(f"- #{pr['number']}: {pr['title']}")
+    else:
+        print("Failed to fetch PRs.")
+
