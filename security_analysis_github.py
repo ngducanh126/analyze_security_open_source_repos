@@ -41,3 +41,17 @@ def fetch_security_prs(owner, repo):
     else:
         print("Failed to fetch PRs.")
 
+def fetch_recent_cve_mentions(owner, repo):
+    """Search for recent CVE mentions in issues and PRs."""
+    import requests
+    url = "https://api.github.com/search/issues"
+    params = {'q': f'repo:{owner}/{repo} CVE', 'per_page': 50}
+    resp = requests.get(url, params=params)
+    if resp.status_code == 200:
+        items = resp.json().get('items', [])
+        print(f"CVE mentions: {len(items)}")
+        for item in items:
+            print(f"- #{item['number']}: {item['title']}")
+    else:
+        print("Failed to search for CVEs.")
+
