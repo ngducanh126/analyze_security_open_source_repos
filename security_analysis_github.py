@@ -55,3 +55,16 @@ def fetch_recent_cve_mentions(owner, repo):
     else:
         print("Failed to search for CVEs.")
 
+def fetch_security_advisories(owner, repo):
+    """Fetch security advisories for the repo."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/security/advisories"
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        advisories = resp.json()
+        print(f"Security advisories: {len(advisories)}")
+        for adv in advisories:
+            print(f"- {adv.get('summary', 'No summary')}")
+    else:
+        print("Failed to fetch advisories.")
+
