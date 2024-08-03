@@ -68,3 +68,13 @@ def fetch_security_advisories(owner, repo):
     else:
         print("Failed to fetch advisories.")
 
+def check_security_md(owner, repo):
+    """Check if SECURITY.md exists in the repo."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/contents/SECURITY.md"
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        print("SECURITY.md exists.")
+    else:
+        print("SECURITY.md not found.")
+
