@@ -78,3 +78,18 @@ def check_security_md(owner, repo):
     else:
         print("SECURITY.md not found.")
 
+def fetch_recent_security_commits(owner, repo):
+    """Fetch recent commits mentioning security."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/commits"
+    params = {'per_page': 100}
+    resp = requests.get(url, params=params)
+    if resp.status_code == 200:
+        commits = resp.json()
+        sec_commits = [c for c in commits if 'security' in c['commit']['message'].lower()]
+        print(f"Recent security commits: {len(sec_commits)}")
+        for c in sec_commits:
+            print(f"- {c['commit']['message'].splitlines()[0]}")
+    else:
+        print("Failed to fetch commits.")
+
