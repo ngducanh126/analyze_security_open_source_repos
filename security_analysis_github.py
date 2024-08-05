@@ -93,3 +93,15 @@ def fetch_recent_security_commits(owner, repo):
     else:
         print("Failed to fetch commits.")
 
+def fetch_security_labels(owner, repo):
+    """List all labels containing 'security'."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/labels"
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        labels = resp.json()
+        sec_labels = [l['name'] for l in labels if 'security' in l['name'].lower()]
+        print(f"Security-related labels: {sec_labels}")
+    else:
+        print("Failed to fetch labels.")
+
