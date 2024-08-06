@@ -105,3 +105,17 @@ def fetch_security_labels(owner, repo):
     else:
         print("Failed to fetch labels.")
 
+def fetch_security_releases(owner, repo):
+    """Fetch releases mentioning security."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/releases"
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        releases = resp.json()
+        sec_releases = [r for r in releases if 'security' in (r.get('body') or '').lower()]
+        print(f"Releases mentioning security: {len(sec_releases)}")
+        for r in sec_releases:
+            print(f"- {r['tag_name']}: {r['name']}")
+    else:
+        print("Failed to fetch releases.")
+
