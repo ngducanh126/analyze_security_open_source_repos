@@ -119,3 +119,19 @@ def fetch_security_releases(owner, repo):
     else:
         print("Failed to fetch releases.")
 
+def fetch_security_contributors(owner, repo):
+    """List contributors who worked on security issues."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/issues"
+    params = {'labels': 'security', 'per_page': 100}
+    resp = requests.get(url, params=params)
+    if resp.status_code == 200:
+        issues = resp.json()
+        contributors = set()
+        for issue in issues:
+            if issue.get('user'):
+                contributors.add(issue['user']['login'])
+        print(f"Contributors to security issues: {list(contributors)}")
+    else:
+        print("Failed to fetch contributors.")
+
