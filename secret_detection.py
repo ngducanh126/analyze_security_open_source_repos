@@ -12,3 +12,20 @@ def detect_aws_keys_in_files(repo_path):
             except Exception:
                 continue
 
+def detect_private_keys(repo_path):
+    """Detect private key files by filename and content."""
+    import os
+    key_filenames = ['id_rsa', 'id_dsa', 'id_ecdsa', 'id_ed25519', 'private.key']
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            if file in key_filenames:
+                print(f"Possible private key file found: {os.path.join(root, file)}")
+            else:
+                try:
+                    with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                        content = f.read(100)
+                        if "PRIVATE KEY" in content:
+                            print(f"Private key content found in: {os.path.join(root, file)}")
+                except Exception:
+                    continue
+
