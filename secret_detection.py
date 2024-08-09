@@ -29,3 +29,18 @@ def detect_private_keys(repo_path):
                 except Exception:
                     continue
 
+def detect_password_in_code(repo_path):
+    """Detect hardcoded passwords in code files."""
+    import re, os
+    password_patterns = [re.compile(r'password\s*=\s*['\"]([^'\"]+)['\"]', re.I)]
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            try:
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                    for line in f:
+                        for pattern in password_patterns:
+                            if pattern.search(line):
+                                print(f"Hardcoded password found in {file}: {line.strip()}")
+            except Exception:
+                continue
+
