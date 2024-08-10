@@ -44,3 +44,21 @@ def detect_password_in_code(repo_path):
             except Exception:
                 continue
 
+def detect_api_keys(repo_path):
+    """Detect generic API keys using regex patterns."""
+    import re, os
+    api_key_patterns = [
+        re.compile(r'api[_-]?key\s*=\s*['\"]?[\w-]{16,}['\"]?', re.I),
+        re.compile(r'slack[_-]?token\s*=\s*['\"]?xox[baprs]-[0-9a-zA-Z]{10,48}['\"]?', re.I)
+    ]
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            try:
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                    for line in f:
+                        for pattern in api_key_patterns:
+                            if pattern.search(line):
+                                print(f"API key found in {file}: {line.strip()}")
+            except Exception:
+                continue
+
