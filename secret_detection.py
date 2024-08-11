@@ -62,3 +62,17 @@ def detect_api_keys(repo_path):
             except Exception:
                 continue
 
+def detect_jwt_tokens(repo_path):
+    """Detect JWT tokens in codebase."""
+    import re, os
+    jwt_pattern = re.compile(r'eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9._-]+\.[A-Za-z0-9._-]+')
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            try:
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                    for line in f:
+                        if jwt_pattern.search(line):
+                            print(f"JWT token found in {file}: {line.strip()}")
+            except Exception:
+                continue
+
