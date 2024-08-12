@@ -76,3 +76,16 @@ def detect_jwt_tokens(repo_path):
             except Exception:
                 continue
 
+def detect_secrets_in_git_history(repo_path):
+    """Detect secrets in git history using git log and regex."""
+    import subprocess, re
+    secret_patterns = [re.compile(r'AKIA[0-9A-Z]{16}'), re.compile(r'password\s*=\s*['\"]([^'\"]+)['\"]', re.I)]
+    try:
+        log = subprocess.check_output(['git', '-C', repo_path, 'log', '-p', '-G', 'AKIA|password'], encoding='utf-8', errors='ignore')
+        for line in log.splitlines():
+            for pattern in secret_patterns:
+                if pattern.search(line):
+                    print(f"Secret found in git history: {line.strip()}")
+    except Exception as e:
+        print("Error scanning git history:", e)
+
