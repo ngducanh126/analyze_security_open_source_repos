@@ -89,3 +89,17 @@ def detect_secrets_in_git_history(repo_path):
     except Exception as e:
         print("Error scanning git history:", e)
 
+def detect_env_secrets(repo_path):
+    """Detect secrets in .env files."""
+    import os
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            if file == ".env":
+                try:
+                    with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                        for line in f:
+                            if "SECRET" in line or "KEY" in line or "PASSWORD" in line:
+                                print(f"Possible secret in {file}: {line.strip()}")
+                except Exception:
+                    continue
+
