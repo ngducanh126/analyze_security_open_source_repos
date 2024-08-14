@@ -103,3 +103,17 @@ def detect_env_secrets(repo_path):
                 except Exception:
                     continue
 
+def detect_github_tokens(repo_path):
+    """Detect GitHub tokens in files."""
+    import re, os
+    github_token_pattern = re.compile(r'ghp_[A-Za-z0-9]{36,}')
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            try:
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                    for line in f:
+                        if github_token_pattern.search(line):
+                            print(f"GitHub token found in {file}: {line.strip()}")
+            except Exception:
+                continue
+
