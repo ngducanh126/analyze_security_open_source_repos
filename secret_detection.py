@@ -117,3 +117,17 @@ def detect_github_tokens(repo_path):
             except Exception:
                 continue
 
+def detect_google_api_keys(repo_path):
+    """Detect Google API keys in files."""
+    import re, os
+    google_api_pattern = re.compile(r'AIza[0-9A-Za-z-_]{35}')
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            try:
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                    for line in f:
+                        if google_api_pattern.search(line):
+                            print(f"Google API key found in {file}: {line.strip()}")
+            except Exception:
+                continue
+
