@@ -131,3 +131,17 @@ def detect_google_api_keys(repo_path):
             except Exception:
                 continue
 
+def detect_slack_tokens(repo_path):
+    """Detect Slack tokens in files."""
+    import re, os
+    slack_token_pattern = re.compile(r'xox[baprs]-[0-9a-zA-Z]{10,48}')
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            try:
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                    for line in f:
+                        if slack_token_pattern.search(line):
+                            print(f"Slack token found in {file}: {line.strip()}")
+            except Exception:
+                continue
+
