@@ -31,3 +31,14 @@ def detect_os_system_usage(repo_path):
                         if "os.system(" in line:
                             print(f"os.system() found in {file} at line {i}: {line.strip()}")
 
+def detect_subprocess_usage(repo_path):
+    """Detect usage of subprocess module in Python files."""
+    import os
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            if file.endswith('.py'):
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                    for i, line in enumerate(f, 1):
+                        if "subprocess." in line:
+                            print(f"subprocess usage found in {file} at line {i}: {line.strip()}")
+
