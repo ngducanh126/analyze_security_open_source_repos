@@ -53,3 +53,14 @@ def detect_pickle_usage(repo_path):
                         if "pickle." in line:
                             print(f"pickle usage found in {file} at line {i}: {line.strip()}")
 
+def detect_yaml_load_usage(repo_path):
+    """Detect unsafe yaml.load usage (should use safe_load)."""
+    import os
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            if file.endswith('.py'):
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                    for i, line in enumerate(f, 1):
+                        if "yaml.load(" in line and "safe_load" not in line:
+                            print(f"yaml.load() found in {file} at line {i}: {line.strip()}")
+
