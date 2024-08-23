@@ -64,3 +64,14 @@ def detect_yaml_load_usage(repo_path):
                         if "yaml.load(" in line and "safe_load" not in line:
                             print(f"yaml.load() found in {file} at line {i}: {line.strip()}")
 
+def detect_input_usage(repo_path):
+    """Detect usage of input() in Python files (may be dangerous in some contexts)."""
+    import os
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            if file.endswith('.py'):
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                    for i, line in enumerate(f, 1):
+                        if "input(" in line:
+                            print(f"input() found in {file} at line {i}: {line.strip()}")
+
