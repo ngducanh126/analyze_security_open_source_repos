@@ -75,3 +75,14 @@ def detect_input_usage(repo_path):
                         if "input(" in line:
                             print(f"input() found in {file} at line {i}: {line.strip()}")
 
+def detect_shell_true_subprocess(repo_path):
+    """Detect subprocess calls with shell=True."""
+    import os
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            if file.endswith('.py'):
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                    for i, line in enumerate(f, 1):
+                        if "subprocess" in line and "shell=True" in line:
+                            print(f"subprocess with shell=True in {file} at line {i}: {line.strip()}")
+
