@@ -108,3 +108,14 @@ def detect_javascript_function_constructor(repo_path):
                         if "new Function(" in line:
                             print(f"Function constructor found in {file} at line {i}: {line.strip()}")
 
+def detect_php_eval(repo_path):
+    """Detect eval() usage in PHP files."""
+    import os
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            if file.endswith('.php'):
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                    for i, line in enumerate(f, 1):
+                        if "eval(" in line:
+                            print(f"eval() found in {file} at line {i}: {line.strip()}")
+
