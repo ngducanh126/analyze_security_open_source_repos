@@ -119,3 +119,16 @@ def detect_php_eval(repo_path):
                         if "eval(" in line:
                             print(f"eval() found in {file} at line {i}: {line.strip()}")
 
+def detect_php_system_calls(repo_path):
+    """Detect system/exec/passthru/shell_exec usage in PHP files."""
+    import os
+    dangerous = ["system(", "exec(", "passthru(", "shell_exec("]
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            if file.endswith('.php'):
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                    for i, line in enumerate(f, 1):
+                        for d in dangerous:
+                            if d in line:
+                                print(f"{d.strip('(')} found in {file} at line {i}: {line.strip()}")
+
