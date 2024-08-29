@@ -132,3 +132,14 @@ def detect_php_system_calls(repo_path):
                             if d in line:
                                 print(f"{d.strip('(')} found in {file} at line {i}: {line.strip()}")
 
+def detect_template_injection_patterns(repo_path):
+    """Detect common template injection patterns in Python/Jinja templates."""
+    import os
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            if file.endswith('.html') or file.endswith('.jinja2'):
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                    for i, line in enumerate(f, 1):
+                        if "{{" in line and "}}" in line and "|" not in line:
+                            print(f"Possible template injection in {file} at line {i}: {line.strip()}")
+
