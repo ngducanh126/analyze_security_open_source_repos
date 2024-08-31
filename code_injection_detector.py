@@ -154,3 +154,15 @@ def detect_ruby_eval(repo_path):
                         if "eval(" in line:
                             print(f"eval() found in {file} at line {i}: {line.strip()}")
 
+def detect_command_injection_patterns(repo_path):
+    """Detect command injection patterns in Python files."""
+    import os, re
+    pattern = re.compile(r'(["']\s*\+\s*user_input\s*\+\s*["'])')
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            if file.endswith('.py'):
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                    for i, line in enumerate(f, 1):
+                        if pattern.search(line):
+                            print(f"Possible command injection in {file} at line {i}: {line.strip()}")
+
