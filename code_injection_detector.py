@@ -166,3 +166,14 @@ def detect_command_injection_patterns(repo_path):
                         if pattern.search(line):
                             print(f"Possible command injection in {file} at line {i}: {line.strip()}")
 
+def detect_untrusted_deserialization(repo_path):
+    """Detect untrusted deserialization in Python and Java files."""
+    import os
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            if file.endswith('.py') or file.endswith('.java'):
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                    for i, line in enumerate(f, 1):
+                        if "pickle.load(" in line or "ObjectInputStream" in line:
+                            print(f"Untrusted deserialization found in {file} at line {i}: {line.strip()}")
+
