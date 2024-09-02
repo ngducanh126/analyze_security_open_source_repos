@@ -10,3 +10,15 @@ def list_collaborators(owner, repo, token=None):
     else:
         print("Failed to fetch collaborators.")
 
+def list_teams(owner, repo, token=None):
+    """List all teams with access to a GitHub repo."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/teams"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        for team in resp.json():
+            print(f"Team: {team['name']}")
+    else:
+        print("Failed to fetch teams.")
+
