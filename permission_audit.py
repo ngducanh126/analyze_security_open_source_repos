@@ -22,3 +22,15 @@ def list_teams(owner, repo, token=None):
     else:
         print("Failed to fetch teams.")
 
+def check_public_access(owner, repo, token=None):
+    """Check if a repo is public or private."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        data = resp.json()
+        print("Public" if not data.get("private", True) else "Private")
+    else:
+        print("Failed to fetch repo info.")
+
