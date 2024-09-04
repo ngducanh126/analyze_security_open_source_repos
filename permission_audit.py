@@ -34,3 +34,16 @@ def check_public_access(owner, repo, token=None):
     else:
         print("Failed to fetch repo info.")
 
+def list_outside_collaborators(owner, repo, token=None):
+    """List outside collaborators (not in org) for a repo."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/collaborators"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    params = {"affiliation": "outside"}
+    resp = requests.get(url, headers=headers, params=params)
+    if resp.status_code == 200:
+        for user in resp.json():
+            print(f"Outside collaborator: {user['login']}")
+    else:
+        print("Failed to fetch outside collaborators.")
+
