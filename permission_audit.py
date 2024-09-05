@@ -47,3 +47,16 @@ def list_outside_collaborators(owner, repo, token=None):
     else:
         print("Failed to fetch outside collaborators.")
 
+def list_admins(owner, repo, token=None):
+    """List users with admin permission."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/collaborators"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        for user in resp.json():
+            if user.get("permissions", {}).get("admin"):
+                print(f"Admin: {user['login']}")
+    else:
+        print("Failed to fetch collaborators.")
+
