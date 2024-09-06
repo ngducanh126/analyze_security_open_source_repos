@@ -60,3 +60,16 @@ def list_admins(owner, repo, token=None):
     else:
         print("Failed to fetch collaborators.")
 
+def list_write_access(owner, repo, token=None):
+    """List users with write permission."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/collaborators"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        for user in resp.json():
+            if user.get("permissions", {}).get("push"):
+                print(f"Write access: {user['login']}")
+    else:
+        print("Failed to fetch collaborators.")
+
