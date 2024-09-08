@@ -86,3 +86,14 @@ def list_read_access(owner, repo, token=None):
     else:
         print("Failed to fetch collaborators.")
 
+def check_branch_protection(owner, repo, branch, token=None):
+    """Check if a branch is protected."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/branches/{branch}/protection"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        print(f"Branch {branch} is protected.")
+    else:
+        print(f"Branch {branch} is not protected or failed to fetch.")
+
