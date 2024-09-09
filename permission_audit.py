@@ -97,3 +97,15 @@ def check_branch_protection(owner, repo, branch, token=None):
     else:
         print(f"Branch {branch} is not protected or failed to fetch.")
 
+def list_forks(owner, repo, token=None):
+    """List all forks of a repo."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/forks"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        for fork in resp.json():
+            print(f"Fork: {fork['full_name']}")
+    else:
+        print("Failed to fetch forks.")
+
