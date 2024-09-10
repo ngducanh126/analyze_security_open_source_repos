@@ -109,3 +109,15 @@ def list_forks(owner, repo, token=None):
     else:
         print("Failed to fetch forks.")
 
+def list_repo_invitations(owner, repo, token=None):
+    """List pending invitations to the repo."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/invitations"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        for invite in resp.json():
+            print(f"Invitation: {invite['invitee']['login']}")
+    else:
+        print("Failed to fetch invitations.")
+
