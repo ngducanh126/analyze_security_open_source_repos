@@ -121,3 +121,15 @@ def list_repo_invitations(owner, repo, token=None):
     else:
         print("Failed to fetch invitations.")
 
+def check_team_permissions(owner, repo, token=None):
+    """List teams and their permissions for a repo."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/teams"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        for team in resp.json():
+            print(f"Team: {team['name']}, Permission: {team['permission']}")
+    else:
+        print("Failed to fetch teams.")
+
