@@ -133,3 +133,15 @@ def check_team_permissions(owner, repo, token=None):
     else:
         print("Failed to fetch teams.")
 
+def check_repo_visibility(owner, repo, token=None):
+    """Check if the repo is internal, private, or public."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        data = resp.json()
+        print(f"Visibility: {data.get('visibility', 'unknown')}")
+    else:
+        print("Failed to fetch repo info.")
+
