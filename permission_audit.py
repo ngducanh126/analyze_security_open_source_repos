@@ -145,3 +145,15 @@ def check_repo_visibility(owner, repo, token=None):
     else:
         print("Failed to fetch repo info.")
 
+def list_dependabot_alerts(owner, repo, token=None):
+    """List Dependabot alerts for a repo (requires special permissions)."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/dependabot/alerts"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        for alert in resp.json():
+            print(f"Dependabot alert: {alert['dependency']['package']['name']}")
+    else:
+        print("Failed to fetch Dependabot alerts or insufficient permissions.")
+
