@@ -157,3 +157,17 @@ def list_dependabot_alerts(owner, repo, token=None):
     else:
         print("Failed to fetch Dependabot alerts or insufficient permissions.")
 
+def list_codeowners(owner, repo, token=None):
+    """Check for CODEOWNERS file and list code owners."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/contents/.github/CODEOWNERS"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        import base64
+        content = base64.b64decode(resp.json()['content']).decode('utf-8')
+        print("CODEOWNERS content:")
+        print(content)
+    else:
+        print("CODEOWNERS file not found.")
+
