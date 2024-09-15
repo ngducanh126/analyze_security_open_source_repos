@@ -171,3 +171,14 @@ def list_codeowners(owner, repo, token=None):
     else:
         print("CODEOWNERS file not found.")
 
+def check_actions_permissions(owner, repo, token=None):
+    """Check GitHub Actions permissions for a repo."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/actions/permissions"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        print("Actions permissions:", resp.json())
+    else:
+        print("Failed to fetch Actions permissions.")
+
