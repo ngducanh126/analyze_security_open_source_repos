@@ -182,3 +182,15 @@ def check_actions_permissions(owner, repo, token=None):
     else:
         print("Failed to fetch Actions permissions.")
 
+def list_webhooks(owner, repo, token=None):
+    """List webhooks configured for a repo."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/hooks"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        for hook in resp.json():
+            print(f"Webhook: {hook['config'].get('url', 'unknown')}")
+    else:
+        print("Failed to fetch webhooks.")
+
