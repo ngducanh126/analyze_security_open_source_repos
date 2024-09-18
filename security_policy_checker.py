@@ -14,3 +14,15 @@ def check_security_md_in_github_dir(owner, repo, token=None):
     resp = requests.get(url, headers=headers)
     print(".github/SECURITY.md found." if resp.status_code == 200 else ".github/SECURITY.md not found.")
 
+def fetch_security_md_content(owner, repo, token=None):
+    """Fetch and print the content of SECURITY.md if it exists."""
+    import requests, base64
+    url = f"https://api.github.com/repos/{owner}/{repo}/contents/SECURITY.md"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        content = base64.b64decode(resp.json()['content']).decode('utf-8')
+        print(content)
+    else:
+        print("SECURITY.md not found.")
+
