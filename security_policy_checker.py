@@ -26,3 +26,15 @@ def fetch_security_md_content(owner, repo, token=None):
     else:
         print("SECURITY.md not found.")
 
+def check_security_policy_section(owner, repo, token=None):
+    """Check if SECURITY.md contains a policy section."""
+    import requests, base64
+    url = f"https://api.github.com/repos/{owner}/{repo}/contents/SECURITY.md"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        content = base64.b64decode(resp.json()['content']).decode('utf-8').lower()
+        print("Policy section found." if "policy" in content else "No policy section found.")
+    else:
+        print("SECURITY.md not found.")
+
