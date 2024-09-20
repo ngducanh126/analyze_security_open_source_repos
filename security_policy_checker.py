@@ -38,3 +38,18 @@ def check_security_policy_section(owner, repo, token=None):
     else:
         print("SECURITY.md not found.")
 
+def check_contact_info_in_security_md(owner, repo, token=None):
+    """Check if SECURITY.md contains contact info."""
+    import requests, base64, re
+    url = f"https://api.github.com/repos/{owner}/{repo}/contents/SECURITY.md"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        content = base64.b64decode(resp.json()['content']).decode('utf-8')
+        if re.search(r'@|mailto:|http[s]?://', content):
+            print("Contact info found in SECURITY.md.")
+        else:
+            print("No contact info in SECURITY.md.")
+    else:
+        print("SECURITY.md not found.")
+
