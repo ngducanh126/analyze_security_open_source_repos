@@ -80,3 +80,11 @@ def check_response_time_commitment(owner, repo, token=None):
     else:
         print("SECURITY.md not found.")
 
+def check_github_security_advisories_enabled(owner, repo, token=None):
+    """Check if GitHub Security Advisories are enabled."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/security/advisories"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    print("Security advisories enabled." if resp.status_code == 200 else "Security advisories not enabled or insufficient permissions.")
+
