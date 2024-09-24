@@ -88,3 +88,15 @@ def check_github_security_advisories_enabled(owner, repo, token=None):
     resp = requests.get(url, headers=headers)
     print("Security advisories enabled." if resp.status_code == 200 else "Security advisories not enabled or insufficient permissions.")
 
+def check_vulnerability_reporting(owner, repo, token=None):
+    """Check if vulnerability reporting is mentioned in SECURITY.md."""
+    import requests, base64
+    url = f"https://api.github.com/repos/{owner}/{repo}/contents/SECURITY.md"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        content = base64.b64decode(resp.json()['content']).decode('utf-8').lower()
+        print("Vulnerability reporting instructions found." if "vulnerab" in content else "No vulnerability reporting instructions found.")
+    else:
+        print("SECURITY.md not found.")
+
