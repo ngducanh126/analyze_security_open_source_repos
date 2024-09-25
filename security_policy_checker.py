@@ -100,3 +100,15 @@ def check_vulnerability_reporting(owner, repo, token=None):
     else:
         print("SECURITY.md not found.")
 
+def check_security_labels(owner, repo, token=None):
+    """Check if repo has security-related labels."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/labels"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        labels = [l['name'] for l in resp.json() if 'security' in l['name'].lower()]
+        print(f"Security labels: {labels}" if labels else "No security labels found.")
+    else:
+        print("Failed to fetch labels.")
+
