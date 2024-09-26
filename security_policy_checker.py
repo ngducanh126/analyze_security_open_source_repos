@@ -112,3 +112,15 @@ def check_security_labels(owner, repo, token=None):
     else:
         print("Failed to fetch labels.")
 
+def check_security_policy_link_in_readme(owner, repo, token=None):
+    """Check if README links to SECURITY.md or security policy."""
+    import requests, base64
+    url = f"https://api.github.com/repos/{owner}/{repo}/contents/README.md"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        content = base64.b64decode(resp.json()['content']).decode('utf-8').lower()
+        print("Link to security policy found in README." if "security.md" in content or "security policy" in content else "No link to security policy in README.")
+    else:
+        print("README.md not found.")
+
