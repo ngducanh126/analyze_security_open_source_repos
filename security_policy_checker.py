@@ -124,3 +124,16 @@ def check_security_policy_link_in_readme(owner, repo, token=None):
     else:
         print("README.md not found.")
 
+def check_security_policy_in_docs(owner, repo, token=None):
+    """Check if documentation mentions security policy."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/contents/docs"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        files = [f['name'] for f in resp.json()]
+        found = any('security' in name.lower() for name in files)
+        print("Security policy found in docs." if found else "No security policy in docs.")
+    else:
+        print("Docs directory not found.")
+
