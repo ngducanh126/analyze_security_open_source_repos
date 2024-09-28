@@ -137,3 +137,15 @@ def check_security_policy_in_docs(owner, repo, token=None):
     else:
         print("Docs directory not found.")
 
+def check_security_policy_last_updated(owner, repo, token=None):
+    """Check when SECURITY.md was last updated."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/commits"
+    params = {"path": "SECURITY.md", "per_page": 1}
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers, params=params)
+    if resp.status_code == 200 and resp.json():
+        print("SECURITY.md last updated at:", resp.json()[0]['commit']['committer']['date'])
+    else:
+        print("Could not determine last update for SECURITY.md.")
+
