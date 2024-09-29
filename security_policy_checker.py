@@ -149,3 +149,15 @@ def check_security_policy_last_updated(owner, repo, token=None):
     else:
         print("Could not determine last update for SECURITY.md.")
 
+def check_security_policy_language(owner, repo, token=None):
+    """Check if SECURITY.md is written in English."""
+    import requests, base64
+    url = f"https://api.github.com/repos/{owner}/{repo}/contents/SECURITY.md"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        content = base64.b64decode(resp.json()['content']).decode('utf-8')
+        print("SECURITY.md appears to be in English." if "the" in content.lower() else "SECURITY.md may not be in English.")
+    else:
+        print("SECURITY.md not found.")
+
