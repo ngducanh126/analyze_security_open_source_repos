@@ -161,3 +161,15 @@ def check_security_policy_language(owner, repo, token=None):
     else:
         print("SECURITY.md not found.")
 
+def check_security_policy_file_size(owner, repo, token=None):
+    """Check the size of SECURITY.md file."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/contents/SECURITY.md"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        size = resp.json().get('size', 0)
+        print(f"SECURITY.md size: {size} bytes")
+    else:
+        print("SECURITY.md not found.")
+
