@@ -10,3 +10,16 @@ def fetch_repo_cves(owner, repo):
     else:
         print("Failed to fetch advisories.")
 
+def fetch_cves_from_osv(owner, repo):
+    """Fetch CVEs from OSV.dev for the repo."""
+    import requests
+    url = "https://api.osv.dev/v1/query"
+    data = {"repo": f"github.com/{owner}/{repo}"}
+    resp = requests.post(url, json=data)
+    if resp.status_code == 200:
+        vulns = resp.json().get("vulns", [])
+        for v in vulns:
+            print(f"OSV: {v.get('id', 'N/A')} - {v.get('summary', '')}")
+    else:
+        print("Failed to fetch OSV vulnerabilities.")
+
