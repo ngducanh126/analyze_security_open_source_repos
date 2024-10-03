@@ -23,3 +23,16 @@ def fetch_cves_from_osv(owner, repo):
     else:
         print("Failed to fetch OSV vulnerabilities.")
 
+def fetch_cves_for_package(package_name):
+    """Fetch CVEs for a package from OSV.dev."""
+    import requests
+    url = "https://api.osv.dev/v1/query"
+    data = {"package": {"name": package_name}}
+    resp = requests.post(url, json=data)
+    if resp.status_code == 200:
+        vulns = resp.json().get("vulns", [])
+        for v in vulns:
+            print(f"Package CVE: {v.get('id', 'N/A')} - {v.get('summary', '')}")
+    else:
+        print("Failed to fetch package vulnerabilities.")
+
