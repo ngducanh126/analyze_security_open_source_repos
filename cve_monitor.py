@@ -36,3 +36,14 @@ def fetch_cves_for_package(package_name):
     else:
         print("Failed to fetch package vulnerabilities.")
 
+def fetch_recent_cves():
+    """Fetch recent CVEs from cve.circl.lu."""
+    import requests
+    url = "https://cve.circl.lu/api/last"
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        for cve in resp.json():
+            print(f"{cve['id']}: {cve['summary']}")
+    else:
+        print("Failed to fetch recent CVEs.")
+
