@@ -47,3 +47,15 @@ def fetch_recent_cves():
     else:
         print("Failed to fetch recent CVEs.")
 
+def fetch_cve_details(cve_id):
+    """Fetch details for a specific CVE."""
+    import requests
+    url = f"https://cve.circl.lu/api/cve/{cve_id}"
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        cve = resp.json()
+        print(f"{cve['id']}: {cve['summary']}")
+        print("CVSS:", cve.get("cvss", "N/A"))
+    else:
+        print("Failed to fetch CVE details.")
+
