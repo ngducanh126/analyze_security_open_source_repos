@@ -59,3 +59,16 @@ def fetch_cve_details(cve_id):
     else:
         print("Failed to fetch CVE details.")
 
+def fetch_nvd_cve_feed():
+    """Fetch the latest NVD CVE feed (summary only)."""
+    import requests
+    url = "https://services.nvd.nist.gov/rest/json/cves/1.0"
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        for item in resp.json().get("result", {}).get("CVE_Items", []):
+            cve_id = item["cve"]["CVE_data_meta"]["ID"]
+            desc = item["cve"]["description"]["description_data"][0]["value"]
+            print(f"{cve_id}: {desc}")
+    else:
+        print("Failed to fetch NVD CVE feed.")
+
