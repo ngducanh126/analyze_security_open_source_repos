@@ -85,3 +85,16 @@ def fetch_cves_for_language(language):
     else:
         print("Failed to fetch language vulnerabilities.")
 
+def fetch_cves_for_commit(owner, repo, commit_hash):
+    """Check if a commit is referenced in any CVE advisory."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/commits/{commit_hash}/pulls"
+    headers = {"Accept": "application/vnd.github.groot-preview+json"}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        for pr in resp.json():
+            if "cve" in pr["title"].lower():
+                print(f"CVE-related PR: {pr['title']}")
+    else:
+        print("Failed to fetch commit PRs.")
+
