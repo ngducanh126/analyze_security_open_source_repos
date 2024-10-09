@@ -98,3 +98,16 @@ def fetch_cves_for_commit(owner, repo, commit_hash):
     else:
         print("Failed to fetch commit PRs.")
 
+def fetch_cves_for_dependency(owner, repo, dependency):
+    """Check if a dependency has known CVEs using OSV.dev."""
+    import requests
+    url = "https://api.osv.dev/v1/query"
+    data = {"package": {"name": dependency}}
+    resp = requests.post(url, json=data)
+    if resp.status_code == 200:
+        vulns = resp.json().get("vulns", [])
+        for v in vulns:
+            print(f"Dependency CVE: {v.get('id', 'N/A')} - {v.get('summary', '')}")
+    else:
+        print("Failed to fetch dependency vulnerabilities.")
+
