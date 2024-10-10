@@ -111,3 +111,17 @@ def fetch_cves_for_dependency(owner, repo, dependency):
     else:
         print("Failed to fetch dependency vulnerabilities.")
 
+def fetch_cves_for_github_release(owner, repo, release_tag):
+    """Check if a GitHub release is associated with any CVE."""
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/releases/tags/{release_tag}"
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        release = resp.json()
+        if "cve" in (release.get("body") or "").lower():
+            print(f"CVE mentioned in release {release_tag}")
+        else:
+            print(f"No CVE mentioned in release {release_tag}")
+    else:
+        print("Failed to fetch release info.")
+
