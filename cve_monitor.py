@@ -125,3 +125,14 @@ def fetch_cves_for_github_release(owner, repo, release_tag):
     else:
         print("Failed to fetch release info.")
 
+def fetch_cves_for_year(year):
+    """Fetch CVEs published in a specific year from cve.circl.lu."""
+    import requests
+    url = f"https://cve.circl.lu/api/cvefor/{year}"
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        for cve in resp.json():
+            print(f"{cve['id']}: {cve['summary']}")
+    else:
+        print("Failed to fetch CVEs for year.")
+
