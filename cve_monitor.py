@@ -136,3 +136,14 @@ def fetch_cves_for_year(year):
     else:
         print("Failed to fetch CVEs for year.")
 
+def fetch_cves_for_vendor_product(vendor, product):
+    """Fetch CVEs for a vendor/product from cve.circl.lu."""
+    import requests
+    url = f"https://cve.circl.lu/api/search/{vendor}/{product}"
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        for cve in resp.json().get("data", []):
+            print(f"{cve['id']}: {cve['summary']}")
+    else:
+        print("Failed to fetch vendor/product CVEs.")
+
