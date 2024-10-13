@@ -147,3 +147,15 @@ def fetch_cves_for_vendor_product(vendor, product):
     else:
         print("Failed to fetch vendor/product CVEs.")
 
+def fetch_cve_references(cve_id):
+    """Fetch references for a specific CVE."""
+    import requests
+    url = f"https://cve.circl.lu/api/cve/{cve_id}"
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        cve = resp.json()
+        for ref in cve.get("references", []):
+            print(f"Reference: {ref}")
+    else:
+        print("Failed to fetch CVE references.")
+
