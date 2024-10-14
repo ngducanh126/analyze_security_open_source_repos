@@ -159,3 +159,14 @@ def fetch_cve_references(cve_id):
     else:
         print("Failed to fetch CVE references.")
 
+def fetch_cve_cvss_score(cve_id):
+    """Fetch CVSS score for a specific CVE."""
+    import requests
+    url = f"https://cve.circl.lu/api/cve/{cve_id}"
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        cve = resp.json()
+        print(f"CVSS score for {cve_id}: {cve.get('cvss', 'N/A')}")
+    else:
+        print("Failed to fetch CVSS score.")
+
