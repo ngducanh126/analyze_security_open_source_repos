@@ -170,3 +170,14 @@ def fetch_cve_cvss_score(cve_id):
     else:
         print("Failed to fetch CVSS score.")
 
+def fetch_cve_published_date(cve_id):
+    """Fetch published date for a specific CVE."""
+    import requests
+    url = f"https://cve.circl.lu/api/cve/{cve_id}"
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        cve = resp.json()
+        print(f"Published date for {cve_id}: {cve.get('Published', 'N/A')}")
+    else:
+        print("Failed to fetch published date.")
+
