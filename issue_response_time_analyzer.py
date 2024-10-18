@@ -28,3 +28,17 @@ def get_first_response_time(issue):
             return delta.total_seconds() / 3600  # hours
     return None
 
+def average_first_response_time(owner, repo, token=None):
+    """Calculate average first response time for issues."""
+    issues = fetch_issues(owner, repo, state='all', token=token)
+    times = []
+    for issue in issues:
+        t = get_first_response_time(issue)
+        if t is not None:
+            times.append(t)
+    if times:
+        avg = sum(times) / len(times)
+        print(f"Average first response time: {avg:.2f} hours")
+    else:
+        print("No response times found.")
+
