@@ -42,3 +42,12 @@ def average_first_response_time(owner, repo, token=None):
     else:
         print("No response times found.")
 
+def get_time_to_close(issue):
+    """Get the time to close for an issue."""
+    if issue.get("closed_at"):
+        from dateutil import parser
+        created = parser.parse(issue["created_at"])
+        closed = parser.parse(issue["closed_at"])
+        return (closed - created).total_seconds() / 3600  # hours
+    return None
+
