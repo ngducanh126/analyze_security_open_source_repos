@@ -51,3 +51,17 @@ def get_time_to_close(issue):
         return (closed - created).total_seconds() / 3600  # hours
     return None
 
+def average_time_to_close(owner, repo, token=None):
+    """Calculate average time to close for issues."""
+    issues = fetch_issues(owner, repo, state='closed', token=token)
+    times = []
+    for issue in issues:
+        t = get_time_to_close(issue)
+        if t is not None:
+            times.append(t)
+    if times:
+        avg = sum(times) / len(times)
+        print(f"Average time to close: {avg:.2f} hours")
+    else:
+        print("No closed issues found.")
+
