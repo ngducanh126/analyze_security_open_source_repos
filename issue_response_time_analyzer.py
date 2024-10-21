@@ -65,3 +65,18 @@ def average_time_to_close(owner, repo, token=None):
     else:
         print("No closed issues found.")
 
+def fastest_response_issue(owner, repo, token=None):
+    """Find the issue with the fastest first response."""
+    issues = fetch_issues(owner, repo, state='all', token=token)
+    min_time = None
+    min_issue = None
+    for issue in issues:
+        t = get_first_response_time(issue)
+        if t is not None and (min_time is None or t < min_time):
+            min_time = t
+            min_issue = issue
+    if min_issue:
+        print(f"Fastest response: {min_time:.2f} hours for issue #{min_issue['number']}")
+    else:
+        print("No issues with responses found.")
+
