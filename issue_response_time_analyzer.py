@@ -80,3 +80,18 @@ def fastest_response_issue(owner, repo, token=None):
     else:
         print("No issues with responses found.")
 
+def slowest_response_issue(owner, repo, token=None):
+    """Find the issue with the slowest first response."""
+    issues = fetch_issues(owner, repo, state='all', token=token)
+    max_time = None
+    max_issue = None
+    for issue in issues:
+        t = get_first_response_time(issue)
+        if t is not None and (max_time is None or t > max_time):
+            max_time = t
+            max_issue = issue
+    if max_issue:
+        print(f"Slowest response: {max_time:.2f} hours for issue #{max_issue['number']}")
+    else:
+        print("No issues with responses found.")
+
