@@ -95,3 +95,9 @@ def slowest_response_issue(owner, repo, token=None):
     else:
         print("No issues with responses found.")
 
+def issues_without_response(owner, repo, token=None):
+    """List issues with no response."""
+    issues = fetch_issues(owner, repo, state='open', token=token)
+    no_response = [issue for issue in issues if not issue.get("comments")]
+    print(f"Issues with no response: {[i['number'] for i in no_response]}")
+
