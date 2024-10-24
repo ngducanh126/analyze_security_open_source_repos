@@ -101,3 +101,9 @@ def issues_without_response(owner, repo, token=None):
     no_response = [issue for issue in issues if not issue.get("comments")]
     print(f"Issues with no response: {[i['number'] for i in no_response]}")
 
+def issues_closed_without_response(owner, repo, token=None):
+    """List closed issues with no response."""
+    issues = fetch_issues(owner, repo, state='closed', token=token)
+    no_response = [issue for issue in issues if not issue.get("comments")]
+    print(f"Closed issues with no response: {[i['number'] for i in no_response]}")
+
