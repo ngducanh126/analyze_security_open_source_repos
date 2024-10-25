@@ -107,3 +107,14 @@ def issues_closed_without_response(owner, repo, token=None):
     no_response = [issue for issue in issues if not issue.get("comments")]
     print(f"Closed issues with no response: {[i['number'] for i in no_response]}")
 
+def median_first_response_time(owner, repo, token=None):
+    """Calculate median first response time for issues."""
+    import statistics
+    issues = fetch_issues(owner, repo, state='all', token=token)
+    times = [get_first_response_time(issue) for issue in issues if get_first_response_time(issue) is not None]
+    if times:
+        median = statistics.median(times)
+        print(f"Median first response time: {median:.2f} hours")
+    else:
+        print("No response times found.")
+
