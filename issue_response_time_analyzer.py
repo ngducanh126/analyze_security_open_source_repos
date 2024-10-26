@@ -118,3 +118,14 @@ def median_first_response_time(owner, repo, token=None):
     else:
         print("No response times found.")
 
+def median_time_to_close(owner, repo, token=None):
+    """Calculate median time to close for issues."""
+    import statistics
+    issues = fetch_issues(owner, repo, state='closed', token=token)
+    times = [get_time_to_close(issue) for issue in issues if get_time_to_close(issue) is not None]
+    if times:
+        median = statistics.median(times)
+        print(f"Median time to close: {median:.2f} hours")
+    else:
+        print("No closed issues found.")
+
