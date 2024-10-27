@@ -129,3 +129,12 @@ def median_time_to_close(owner, repo, token=None):
     else:
         print("No closed issues found.")
 
+def open_issues_longer_than(owner, repo, hours, token=None):
+    """List open issues older than a given number of hours."""
+    from dateutil import parser
+    import datetime
+    issues = fetch_issues(owner, repo, state='open', token=token)
+    now = datetime.datetime.utcnow()
+    old_issues = [i for i in issues if (now - parser.parse(i["created_at"])).total_seconds() / 3600 > hours]
+    print(f"Open issues older than {hours} hours: {[i['number'] for i in old_issues]}")
+
