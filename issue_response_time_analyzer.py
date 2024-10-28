@@ -138,3 +138,13 @@ def open_issues_longer_than(owner, repo, hours, token=None):
     old_issues = [i for i in issues if (now - parser.parse(i["created_at"])).total_seconds() / 3600 > hours]
     print(f"Open issues older than {hours} hours: {[i['number'] for i in old_issues]}")
 
+def closed_issues_with_fast_response(owner, repo, max_hours, token=None):
+    """List closed issues that were responded to within max_hours."""
+    issues = fetch_issues(owner, repo, state='closed', token=token)
+    fast = []
+    for issue in issues:
+        t = get_first_response_time(issue)
+        if t is not None and t <= max_hours:
+            fast.append(issue['number'])
+    print(f"Closed issues with response <= {max_hours} hours: {fast}")
+
