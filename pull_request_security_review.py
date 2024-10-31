@@ -21,3 +21,14 @@ def fetch_pr_reviews(owner, repo, pr_number, token=None):
         print(f"Failed to fetch reviews for PR #{pr_number}.")
         return []
 
+def fetch_pr_comments(owner, repo, pr_number, token=None):
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/issues/{pr_number}/comments"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        return resp.json()
+    else:
+        print(f"Failed to fetch comments for PR #{pr_number}.")
+        return []
+
