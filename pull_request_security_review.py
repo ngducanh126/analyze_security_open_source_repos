@@ -32,3 +32,8 @@ def fetch_pr_comments(owner, repo, pr_number, token=None):
         print(f"Failed to fetch comments for PR #{pr_number}.")
         return []
 
+def security_labelled_prs(owner, repo, token=None):
+    prs = fetch_pull_requests(owner, repo, state='all', token=token)
+    sec_prs = [pr for pr in prs if any('security' in l['name'].lower() for l in pr.get('labels', []))]
+    print(f"Security-labelled PRs: {[pr['number'] for pr in sec_prs]}")
+
