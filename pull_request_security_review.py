@@ -37,3 +37,9 @@ def security_labelled_prs(owner, repo, token=None):
     sec_prs = [pr for pr in prs if any('security' in l['name'].lower() for l in pr.get('labels', []))]
     print(f"Security-labelled PRs: {[pr['number'] for pr in sec_prs]}")
 
+def pr_with_security_keywords(owner, repo, token=None):
+    prs = fetch_pull_requests(owner, repo, state='all', token=token)
+    keywords = ['security', 'vulnerability', 'cve', 'exploit', 'patch']
+    sec_prs = [pr for pr in prs if any(k in (pr['title'] + pr.get('body', '')).lower() for k in keywords)]
+    print(f"PRs with security keywords: {[pr['number'] for pr in sec_prs]}")
+
