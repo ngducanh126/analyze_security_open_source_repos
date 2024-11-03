@@ -43,3 +43,8 @@ def pr_with_security_keywords(owner, repo, token=None):
     sec_prs = [pr for pr in prs if any(k in (pr['title'] + pr.get('body', '')).lower() for k in keywords)]
     print(f"PRs with security keywords: {[pr['number'] for pr in sec_prs]}")
 
+def pr_reviewed_by_security_team(owner, repo, pr_number, security_team, token=None):
+    reviews = fetch_pr_reviews(owner, repo, pr_number, token=token)
+    reviewed = any(r['user']['login'] in security_team for r in reviews)
+    print(f"PR #{pr_number} reviewed by security team: {reviewed}")
+
