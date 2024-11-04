@@ -48,3 +48,9 @@ def pr_reviewed_by_security_team(owner, repo, pr_number, security_team, token=No
     reviewed = any(r['user']['login'] in security_team for r in reviews)
     print(f"PR #{pr_number} reviewed by security team: {reviewed}")
 
+def pr_with_security_review_comments(owner, repo, pr_number, token=None):
+    reviews = fetch_pr_reviews(owner, repo, pr_number, token=token)
+    keywords = ['security', 'vulnerability', 'exploit', 'patch']
+    found = any(any(k in (r.get('body') or '').lower() for k in keywords) for r in reviews)
+    print(f"PR #{pr_number} has security review comments: {found}")
+
