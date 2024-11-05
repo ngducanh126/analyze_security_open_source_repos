@@ -54,3 +54,20 @@ def pr_with_security_review_comments(owner, repo, pr_number, token=None):
     found = any(any(k in (r.get('body') or '').lower() for k in keywords) for r in reviews)
     print(f"PR #{pr_number} has security review comments: {found}")
 
+def pr_merged_time(owner, repo, pr_number, token=None):
+    import requests
+    from dateutil import parser
+    url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        pr = resp.json()
+        if pr.get("merged_at"):
+            created = parser.parse(pr["created_at"])
+            merged = parser.parse(pr["merged_at"])
+            print(f"PR #{pr_number} merged in {(merged - created).total_seconds() / 3600:.2f} hours")
+        else:
+            print(f"PR #{pr_number} not merged.")
+    else:
+        print(f"Failed to fetch PR #{pr_number}.")
+
