@@ -71,3 +71,8 @@ def pr_merged_time(owner, repo, pr_number, token=None):
     else:
         print(f"Failed to fetch PR #{pr_number}.")
 
+def pr_closed_without_merge(owner, repo, token=None):
+    prs = fetch_pull_requests(owner, repo, state='closed', token=token)
+    closed = [pr['number'] for pr in prs if not pr.get('merged_at')]
+    print(f"PRs closed without merge: {closed}")
+
