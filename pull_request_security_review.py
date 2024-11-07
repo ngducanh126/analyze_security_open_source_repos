@@ -76,3 +76,9 @@ def pr_closed_without_merge(owner, repo, token=None):
     closed = [pr['number'] for pr in prs if not pr.get('merged_at')]
     print(f"PRs closed without merge: {closed}")
 
+def pr_with_security_patch(owner, repo, token=None):
+    prs = fetch_pull_requests(owner, repo, state='all', token=token)
+    keywords = ['security', 'vulnerability', 'cve', 'exploit', 'patch']
+    patched = [pr['number'] for pr in prs if any(k in (pr['title'] + pr.get('body', '')).lower() for k in keywords)]
+    print(f"PRs patching security: {patched}")
+
