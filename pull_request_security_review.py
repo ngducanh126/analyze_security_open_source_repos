@@ -82,3 +82,24 @@ def pr_with_security_patch(owner, repo, token=None):
     patched = [pr['number'] for pr in prs if any(k in (pr['title'] + pr.get('body', '')).lower() for k in keywords)]
     print(f"PRs patching security: {patched}")
 
+def pr_review_time(owner, repo, pr_number, token=None):
+    import requests
+    from dateutil import parser
+    url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}/reviews"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        reviews = resp.json()
+        if reviews:
+            pr_url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}"
+            pr_resp = requests.get(pr_url, headers=headers)
+            if pr_resp.status_code == 200:
+                pr = pr_resp.json()
+                created = parser.parse(pr["created_at"])
+                first_review = parser.parse(reviews[0]["submitted_at"])
+                print(f"PR #{pr_number} first reviewed in {(first_review - created).total_seconds() / 3600:.2f} hours")
+        else:
+            print(f"PR #{pr_number} has no reviews.")
+    else:
+        print(f"Failed to fetch reviews for PR #{pr_number}.")
+
