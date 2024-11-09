@@ -103,3 +103,12 @@ def pr_review_time(owner, repo, pr_number, token=None):
     else:
         print(f"Failed to fetch reviews for PR #{pr_number}.")
 
+def pr_security_reviewers(owner, repo, pr_number, token=None):
+    reviews = fetch_pr_reviews(owner, repo, pr_number, token=token)
+    keywords = ['security', 'vulnerability', 'exploit', 'patch']
+    reviewers = set()
+    for r in reviews:
+        if any(k in (r.get('body') or '').lower() for k in keywords):
+            reviewers.add(r['user']['login'])
+    print(f"Security reviewers for PR #{pr_number}: {list(reviewers)}")
+
