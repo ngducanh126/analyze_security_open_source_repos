@@ -112,3 +112,14 @@ def pr_security_reviewers(owner, repo, pr_number, token=None):
             reviewers.add(r['user']['login'])
     print(f"Security reviewers for PR #{pr_number}: {list(reviewers)}")
 
+def pr_security_review_labels(owner, repo, pr_number, token=None):
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/issues/{pr_number}/labels"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        labels = [l['name'] for l in resp.json() if 'security' in l['name'].lower()]
+        print(f"Security labels for PR #{pr_number}: {labels}")
+    else:
+        print(f"Failed to fetch labels for PR #{pr_number}.")
+
