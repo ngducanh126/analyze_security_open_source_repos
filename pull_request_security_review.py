@@ -123,3 +123,25 @@ def pr_security_review_labels(owner, repo, pr_number, token=None):
     else:
         print(f"Failed to fetch labels for PR #{pr_number}.")
 
+def pr_security_review_time_stats(owner, repo, token=None):
+    prs = fetch_pull_requests(owner, repo, state='all', token=token)
+    times = []
+    for pr in prs:
+        if any('security' in l['name'].lower() for l in pr.get('labels', [])):
+            import requests
+            from dateutil import parser
+            url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pr['number']}/reviews"
+            headers = {"Authorization": f"token {token}"} if token else {}
+            resp = requests.get(url, headers=headers)
+            if resp.status_code == 200:
+                reviews = resp.json()
+                if reviews:
+                    created = parser.parse(pr["created_at"])
+                    first_review = parser.parse(reviews[0]["submitted_at"])
+                    times.append((first_review - created).total_seconds() / 3600)
+    if times:
+        avg = sum(times) / len(times)
+        print(f"Average time to review security PRs: {avg:.2f} hours")
+    else:
+        print("No security PRs with review times found.")
+
