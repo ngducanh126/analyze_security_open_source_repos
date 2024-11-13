@@ -145,3 +145,12 @@ def pr_security_review_time_stats(owner, repo, token=None):
     else:
         print("No security PRs with review times found.")
 
+
+if __name__ == "__main__":
+    owner = "octocat"
+    repo = "Hello-World"
+    token = None
+
+    print("Security-labelled PRs:")
+    security_labelled_prs(owner, repo, token)
+
