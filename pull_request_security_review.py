@@ -154,3 +154,6 @@ if __name__ == "__main__":
     print("Security-labelled PRs:")
     security_labelled_prs(owner, repo, token)
 
+    print("PRs with security keywords:")
+    pr_with_security_keywords(owner, repo, token)
+
