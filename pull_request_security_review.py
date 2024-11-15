@@ -157,3 +157,6 @@ if __name__ == "__main__":
     print("PRs with security keywords:")
     pr_with_security_keywords(owner, repo, token)
 
+    print("PRs closed without merge:")
+    pr_closed_without_merge(owner, repo, token)
+
