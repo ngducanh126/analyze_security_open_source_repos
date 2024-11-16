@@ -160,3 +160,6 @@ if __name__ == "__main__":
     print("PRs closed without merge:")
     pr_closed_without_merge(owner, repo, token)
 
+    print("PRs patching security vulnerabilities:")
+    pr_with_security_patch(owner, repo, token)
+
