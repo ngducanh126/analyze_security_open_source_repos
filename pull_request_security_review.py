@@ -163,3 +163,6 @@ if __name__ == "__main__":
     print("PRs patching security vulnerabilities:")
     pr_with_security_patch(owner, repo, token)
 
+    print("Reviewers for PR #1 (example):")
+    pr_security_reviewers(owner, repo, 1, token)
+
