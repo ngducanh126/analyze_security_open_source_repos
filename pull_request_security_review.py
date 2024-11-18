@@ -166,3 +166,6 @@ if __name__ == "__main__":
     print("Reviewers for PR #1 (example):")
     pr_security_reviewers(owner, repo, 1, token)
 
+    print("Security review labels for PR #1 (example):")
+    pr_security_review_labels(owner, repo, 1, token)
+
