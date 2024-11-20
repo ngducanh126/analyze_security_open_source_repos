@@ -172,3 +172,6 @@ if __name__ == "__main__":
     print("Security review comments for PR #1 (example):")
     pr_with_security_review_comments(owner, repo, 1, token)
 
+    print("PR #1 review time (example):")
+    pr_review_time(owner, repo, 1, token)
+
