@@ -175,3 +175,6 @@ if __name__ == "__main__":
     print("PR #1 review time (example):")
     pr_review_time(owner, repo, 1, token)
 
+    print("PR #1 merged time (example):")
+    pr_merged_time(owner, repo, 1, token)
+
