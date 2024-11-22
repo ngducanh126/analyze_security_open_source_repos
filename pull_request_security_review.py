@@ -178,3 +178,6 @@ if __name__ == "__main__":
     print("PR #1 merged time (example):")
     pr_merged_time(owner, repo, 1, token)
 
+    print("PR #1 reviewed by security team (example):")
+    pr_reviewed_by_security_team(owner, repo, 1, ['octocat'], token)
+
