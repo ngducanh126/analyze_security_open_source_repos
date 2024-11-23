@@ -181,3 +181,6 @@ if __name__ == "__main__":
     print("PR #1 reviewed by security team (example):")
     pr_reviewed_by_security_team(owner, repo, 1, ['octocat'], token)
 
+    print("Security review time stats:")
+    pr_security_review_time_stats(owner, repo, token)
+
