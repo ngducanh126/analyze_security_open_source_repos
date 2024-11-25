@@ -190,3 +190,8 @@ if __name__ == "__main__":
         if any('security' in l['name'].lower() for l in pr.get('labels', [])):
             pr_security_reviewers(owner, repo, pr['number'], token)
 
+    print("Security review labels for all PRs:")
+    prs = fetch_pull_requests(owner, repo, state='all', token=token)
+    for pr in prs:
+        pr_security_review_labels(owner, repo, pr['number'], token)
+
