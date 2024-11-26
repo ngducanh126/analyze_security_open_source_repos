@@ -195,3 +195,8 @@ if __name__ == "__main__":
     for pr in prs:
         pr_security_review_labels(owner, repo, pr['number'], token)
 
+    print("Security review comments for all PRs:")
+    prs = fetch_pull_requests(owner, repo, state='all', token=token)
+    for pr in prs:
+        pr_with_security_review_comments(owner, repo, pr['number'], token)
+
