@@ -18,3 +18,8 @@ def fetch_license_text(owner, repo, token=None):
         return base64.b64decode(resp.json()["content"]).decode("utf-8")
     return None
 
+def check_license_compatibility(license_id, allowed_licenses=None):
+    if allowed_licenses is None:
+        allowed_licenses = ["MIT", "Apache-2.0", "BSD-3-Clause"]
+    return license_id in allowed_licenses
+
