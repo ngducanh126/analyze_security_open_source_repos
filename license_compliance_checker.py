@@ -23,3 +23,12 @@ def check_license_compatibility(license_id, allowed_licenses=None):
         allowed_licenses = ["MIT", "Apache-2.0", "BSD-3-Clause"]
     return license_id in allowed_licenses
 
+def list_dependency_licenses(requirements_file):
+    licenses = []
+    with open(requirements_file, "r", encoding="utf-8") as f:
+        for line in f:
+            pkg = line.strip().split("==")[0]
+            lic = get_pypi_license(pkg)
+            licenses.append((pkg, lic))
+    return licenses
+
