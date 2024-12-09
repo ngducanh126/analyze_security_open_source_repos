@@ -32,3 +32,12 @@ def list_dependency_licenses(requirements_file):
             licenses.append((pkg, lic))
     return licenses
 
+def get_pypi_license(package):
+    import requests
+    url = f"https://pypi.org/pypi/{package}/json"
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        info = resp.json().get("info", {})
+        return info.get("license", "Unknown")
+    return "Unknown"
+
