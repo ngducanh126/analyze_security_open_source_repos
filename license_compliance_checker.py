@@ -41,3 +41,7 @@ def get_pypi_license(package):
         return info.get("license", "Unknown")
     return "Unknown"
 
+def check_all_dependencies_compatible(requirements_file, allowed_licenses=None):
+    licenses = list_dependency_licenses(requirements_file)
+    return [pkg for pkg, lic in licenses if not check_license_compatibility(lic, allowed_licenses)]
+
