@@ -45,3 +45,8 @@ def check_all_dependencies_compatible(requirements_file, allowed_licenses=None):
     licenses = list_dependency_licenses(requirements_file)
     return [pkg for pkg, lic in licenses if not check_license_compatibility(lic, allowed_licenses)]
 
+def check_license_badge_in_readme(readme_file):
+    with open(readme_file, "r", encoding="utf-8") as f:
+        content = f.read().lower()
+        return "license" in content and "badge" in content
+
