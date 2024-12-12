@@ -50,3 +50,9 @@ def check_license_badge_in_readme(readme_file):
         content = f.read().lower()
         return "license" in content and "badge" in content
 
+def check_license_years(license_file):
+    with open(license_file, "r", encoding="utf-8") as f:
+        content = f.read()
+        import re
+        return re.findall(r"20[0-9]{2}", content)
+
