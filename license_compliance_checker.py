@@ -56,3 +56,12 @@ def check_license_years(license_file):
         import re
         return re.findall(r"20[0-9]{2}", content)
 
+def check_license_holder(license_file):
+    with open(license_file, "r", encoding="utf-8") as f:
+        content = f.read()
+        import re
+        match = re.search(r"Copyright.*", content)
+        if match:
+            return match.group(0)
+    return None
+
