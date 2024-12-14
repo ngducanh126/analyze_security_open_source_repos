@@ -65,3 +65,13 @@ def check_license_holder(license_file):
             return match.group(0)
     return None
 
+def check_license_header_in_files(directory):
+    import os
+    files = [f for f in os.listdir(directory) if f.endswith(".py")]
+    result = []
+    for file in files:
+        with open(os.path.join(directory, file), "r", encoding="utf-8") as f:
+            first = f.readline().lower()
+            result.append((file, "copyright" in first or "license" in first))
+    return result
+
