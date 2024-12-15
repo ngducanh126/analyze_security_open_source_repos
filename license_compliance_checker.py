@@ -75,3 +75,10 @@ def check_license_header_in_files(directory):
             result.append((file, "copyright" in first or "license" in first))
     return result
 
+def check_github_license_api(owner, repo, token=None):
+    import requests
+    url = f"https://api.github.com/repos/{owner}/{repo}/license"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    return resp.status_code == 200
+
