@@ -82,3 +82,7 @@ def check_github_license_api(owner, repo, token=None):
     resp = requests.get(url, headers=headers)
     return resp.status_code == 200
 
+def check_license_spdx(license_id):
+    spdx = ["MIT", "Apache-2.0", "BSD-3-Clause", "GPL-3.0", "LGPL-3.0"]
+    return license_id in spdx
+
