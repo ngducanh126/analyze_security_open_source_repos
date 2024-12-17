@@ -86,3 +86,8 @@ def check_license_spdx(license_id):
     spdx = ["MIT", "Apache-2.0", "BSD-3-Clause", "GPL-3.0", "LGPL-3.0"]
     return license_id in spdx
 
+def check_license_notice_in_dist(dist_file):
+    with open(dist_file, "r", encoding="utf-8") as f:
+        content = f.read().lower()
+        return "license" in content
+
