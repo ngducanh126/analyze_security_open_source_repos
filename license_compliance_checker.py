@@ -91,3 +91,9 @@ def check_license_notice_in_dist(dist_file):
         content = f.read().lower()
         return "license" in content
 
+def check_license_in_package_json(package_json_file):
+    import json
+    with open(package_json_file, "r", encoding="utf-8") as f:
+        data = json.load(f)
+        return data.get("license", None)
+
