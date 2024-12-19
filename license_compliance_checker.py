@@ -97,3 +97,10 @@ def check_license_in_package_json(package_json_file):
         data = json.load(f)
         return data.get("license", None)
 
+def check_license_in_setup_cfg(setup_cfg_file):
+    with open(setup_cfg_file, "r", encoding="utf-8") as f:
+        for line in f:
+            if "license" in line.lower():
+                return line.strip()
+    return None
+
