@@ -15,3 +15,8 @@ def summarize_bandit_findings(bandit_json):
         summary[code] = summary.get(code, 0) + 1
     return summary
 
+def print_bandit_summary(bandit_json):
+    summary = summarize_bandit_findings(bandit_json)
+    for code, count in summary.items():
+        print(f"{code}: {count} findings")
+
