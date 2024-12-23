@@ -20,3 +20,8 @@ def print_bandit_summary(bandit_json):
     for code, count in summary.items():
         print(f"{code}: {count} findings")
 
+def list_high_severity_issues(bandit_json):
+    if not bandit_json or "results" not in bandit_json:
+        return []
+    return [f for f in bandit_json["results"] if f["issue_severity"] == "HIGH"]
+
