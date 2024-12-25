@@ -30,3 +30,8 @@ def list_medium_severity_issues(bandit_json):
         return []
     return [f for f in bandit_json["results"] if f["issue_severity"] == "MEDIUM"]
 
+def list_low_severity_issues(bandit_json):
+    if not bandit_json or "results" not in bandit_json:
+        return []
+    return [f for f in bandit_json["results"] if f["issue_severity"] == "LOW"]
+
