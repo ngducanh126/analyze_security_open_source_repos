@@ -35,3 +35,7 @@ def list_low_severity_issues(bandit_json):
         return []
     return [f for f in bandit_json["results"] if f["issue_severity"] == "LOW"]
 
+def print_issue_details(issues):
+    for issue in issues:
+        print(f"{issue['filename']}:{issue['line_number']} {issue['issue_text']}")
+
