@@ -39,3 +39,8 @@ def print_issue_details(issues):
     for issue in issues:
         print(f"{issue['filename']}:{issue['line_number']} {issue['issue_text']}")
 
+def run_flake8_on_directory(directory):
+    import subprocess
+    result = subprocess.run(["flake8", directory, "--format=%(path)s:%(row)d:%(col)d: %(code)s %(text)s"], capture_output=True, text=True)
+    return result.stdout.splitlines()
+
