@@ -44,3 +44,10 @@ def run_flake8_on_directory(directory):
     result = subprocess.run(["flake8", directory, "--format=%(path)s:%(row)d:%(col)d: %(code)s %(text)s"], capture_output=True, text=True)
     return result.stdout.splitlines()
 
+def summarize_flake8_issues(issues):
+    summary = {}
+    for issue in issues:
+        code = issue.split(":")[3].split()[0]
+        summary[code] = summary.get(code, 0) + 1
+    return summary
+
