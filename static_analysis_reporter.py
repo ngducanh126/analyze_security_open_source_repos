@@ -51,3 +51,8 @@ def summarize_flake8_issues(issues):
         summary[code] = summary.get(code, 0) + 1
     return summary
 
+def print_flake8_summary(issues):
+    summary = summarize_flake8_issues(issues)
+    for code, count in summary.items():
+        print(f"{code}: {count} issues")
+
