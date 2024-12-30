@@ -56,3 +56,11 @@ def print_flake8_summary(issues):
     for code, count in summary.items():
         print(f"{code}: {count} issues")
 
+def run_safety_on_requirements(requirements_file):
+    import subprocess
+    result = subprocess.run(["safety", "check", "-r", requirements_file, "--json"], capture_output=True, text=True)
+    if result.returncode == 0:
+        import json
+        return json.loads(result.stdout)
+    return None
+
