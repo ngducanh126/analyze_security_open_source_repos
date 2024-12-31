@@ -64,3 +64,8 @@ def run_safety_on_requirements(requirements_file):
         return json.loads(result.stdout)
     return None
 
+def summarize_safety_issues(safety_json):
+    if not safety_json or not isinstance(safety_json, list):
+        return 0
+    return len(safety_json)
+
