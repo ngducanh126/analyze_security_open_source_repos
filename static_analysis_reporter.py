@@ -69,3 +69,7 @@ def summarize_safety_issues(safety_json):
         return 0
     return len(safety_json)
 
+def print_safety_summary(safety_json):
+    count = summarize_safety_issues(safety_json)
+    print(f"Vulnerable dependencies: {count}")
+
