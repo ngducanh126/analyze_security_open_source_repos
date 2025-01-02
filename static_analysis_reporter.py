@@ -73,3 +73,9 @@ def print_safety_summary(safety_json):
     count = summarize_safety_issues(safety_json)
     print(f"Vulnerable dependencies: {count}")
 
+def run_all_static_analysis(directory, requirements_file):
+    bandit_json = run_bandit_on_directory(directory)
+    flake8_issues = run_flake8_on_directory(directory)
+    safety_json = run_safety_on_requirements(requirements_file)
+    return bandit_json, flake8_issues, safety_json
+
