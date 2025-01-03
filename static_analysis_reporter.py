@@ -79,3 +79,12 @@ def run_all_static_analysis(directory, requirements_file):
     safety_json = run_safety_on_requirements(requirements_file)
     return bandit_json, flake8_issues, safety_json
 
+def print_full_static_analysis_report(directory, requirements_file):
+    bandit_json, flake8_issues, safety_json = run_all_static_analysis(directory, requirements_file)
+    print("Bandit summary:")
+    print_bandit_summary(bandit_json)
+    print("Flake8 summary:")
+    print_flake8_summary(flake8_issues)
+    print("Safety summary:")
+    print_safety_summary(safety_json)
+
