@@ -8,3 +8,8 @@ def list_workflow_files(repo_path):
                 workflows.append(os.path.join(wf_dir, f))
     return workflows
 
+def load_yaml_file(filepath):
+    import yaml
+    with open(filepath, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
