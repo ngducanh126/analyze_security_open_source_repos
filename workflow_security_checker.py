@@ -23,3 +23,15 @@ def find_unpinned_actions(workflow):
                 unpinned.append(step["uses"])
     return unpinned
 
+def find_plaintext_secrets(workflow):
+    secrets = []
+    if not workflow or "jobs" not in workflow:
+        return secrets
+    for job in workflow["jobs"].values():
+        for step in job.get("steps", []):
+            if "env" in step:
+                for k, v in step["env"].items():
+                    if isinstance(v, str) and ("secret" in v.lower() or "token" in v.lower()):
+                        secrets.append((k, v))
+    return secrets
+
