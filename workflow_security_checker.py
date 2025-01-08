@@ -35,3 +35,13 @@ def find_plaintext_secrets(workflow):
                         secrets.append((k, v))
     return secrets
 
+def find_insecure_checkout(workflow):
+    insecure = []
+    if not workflow or "jobs" not in workflow:
+        return insecure
+    for job in workflow["jobs"].values():
+        for step in job.get("uses", []):
+            if "actions/checkout" in step and "@v1" in step:
+                insecure.append(step)
+    return insecure
+
