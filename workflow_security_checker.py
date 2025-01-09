@@ -45,3 +45,13 @@ def find_insecure_checkout(workflow):
                 insecure.append(step)
     return insecure
 
+def find_scripts_with_curl_bash(workflow):
+    scripts = []
+    if not workflow or "jobs" not in workflow:
+        return scripts
+    for job in workflow["jobs"].values():
+        for step in job.get("steps", []):
+            if "run" in step and ("curl" in step["run"] and "| bash" in step["run"]):
+                scripts.append(step["run"])
+    return scripts
+
