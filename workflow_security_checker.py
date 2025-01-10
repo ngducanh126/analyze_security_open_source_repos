@@ -55,3 +55,11 @@ def find_scripts_with_curl_bash(workflow):
                 scripts.append(step["run"])
     return scripts
 
+def find_open_permissions(workflow):
+    open_perms = []
+    if not workflow or "permissions" not in workflow:
+        return open_perms
+    if workflow["permissions"] == "write-all" or workflow["permissions"] == "read-all":
+        open_perms.append(workflow["permissions"])
+    return open_perms
+
