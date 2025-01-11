@@ -63,3 +63,12 @@ def find_open_permissions(workflow):
         open_perms.append(workflow["permissions"])
     return open_perms
 
+def find_missing_permissions(workflow):
+    missing = []
+    if not workflow or "jobs" not in workflow:
+        return missing
+    for job_name, job in workflow["jobs"].items():
+        if "permissions" not in job:
+            missing.append(job_name)
+    return missing
+
