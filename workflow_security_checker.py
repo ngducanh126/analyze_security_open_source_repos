@@ -72,3 +72,13 @@ def find_missing_permissions(workflow):
             missing.append(job_name)
     return missing
 
+def find_actions_with_latest_tag(workflow):
+    latest = []
+    if not workflow or "jobs" not in workflow:
+        return latest
+    for job in workflow["jobs"].values():
+        for step in job.get("steps", []):
+            if "uses" in step and step["uses"].endswith("@latest"):
+                latest.append(step["uses"])
+    return latest
+
