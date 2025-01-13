@@ -82,3 +82,15 @@ def find_actions_with_latest_tag(workflow):
                 latest.append(step["uses"])
     return latest
 
+def find_env_secrets_exposed(workflow):
+    exposed = []
+    if not workflow or "jobs" not in workflow:
+        return exposed
+    for job in workflow["jobs"].values():
+        for step in job.get("steps", []):
+            if "env" in step:
+                for k, v in step["env"].items():
+                    if "SECRET" in k or "TOKEN" in k:
+                        exposed.append((k, v))
+    return exposed
+
