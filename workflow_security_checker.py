@@ -94,3 +94,15 @@ def find_env_secrets_exposed(workflow):
                         exposed.append((k, v))
     return exposed
 
+def summarize_workflow_security(workflow):
+    return {
+        "unpinned_actions": find_unpinned_actions(workflow),
+        "plaintext_secrets": find_plaintext_secrets(workflow),
+        "insecure_checkout": find_insecure_checkout(workflow),
+        "curl_bash": find_scripts_with_curl_bash(workflow),
+        "open_permissions": find_open_permissions(workflow),
+        "missing_permissions": find_missing_permissions(workflow),
+        "latest_tag": find_actions_with_latest_tag(workflow),
+        "env_secrets_exposed": find_env_secrets_exposed(workflow),
+    }
+
