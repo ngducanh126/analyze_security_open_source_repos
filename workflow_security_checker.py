@@ -106,3 +106,10 @@ def summarize_workflow_security(workflow):
         "env_secrets_exposed": find_env_secrets_exposed(workflow),
     }
 
+def print_workflow_security_summary(workflow_file):
+    workflow = load_yaml_file(workflow_file)
+    summary = summarize_workflow_security(workflow)
+    print(f"Security summary for {workflow_file}:")
+    for k, v in summary.items():
+        print(f"{k}: {v}")
+
