@@ -113,3 +113,8 @@ def print_workflow_security_summary(workflow_file):
     for k, v in summary.items():
         print(f"{k}: {v}")
 
+def check_all_workflows(repo_path):
+    files = list_workflow_files(repo_path)
+    for wf in files:
+        print_workflow_security_summary(wf)
+
