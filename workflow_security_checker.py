@@ -118,3 +118,10 @@ def check_all_workflows(repo_path):
     for wf in files:
         print_workflow_security_summary(wf)
 
+def list_all_insecure_patterns(repo_path):
+    files = list_workflow_files(repo_path)
+    for wf in files:
+        workflow = load_yaml_file(wf)
+        if find_unpinned_actions(workflow) or find_scripts_with_curl_bash(workflow):
+            print(f"Insecure patterns in {wf}")
+
