@@ -125,3 +125,11 @@ def list_all_insecure_patterns(repo_path):
         if find_unpinned_actions(workflow) or find_scripts_with_curl_bash(workflow):
             print(f"Insecure patterns in {wf}")
 
+def print_all_env_secrets(repo_path):
+    files = list_workflow_files(repo_path)
+    for wf in files:
+        workflow = load_yaml_file(wf)
+        secrets = find_env_secrets_exposed(workflow)
+        if secrets:
+            print(f"Secrets exposed in {wf}: {secrets}")
+
