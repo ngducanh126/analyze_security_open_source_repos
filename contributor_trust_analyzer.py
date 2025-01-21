@@ -17,3 +17,6 @@ def get_contributor_commits(owner, repo, contributor, token=None):
         return resp.json()
     return []
 
+def get_critical_files():
+    return ["setup.py", "requirements.txt", ".github/workflows/", "src/", "main.py"]
+
