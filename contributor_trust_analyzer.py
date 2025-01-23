@@ -34,3 +34,23 @@ def contributor_touched_critical(owner, repo, contributor, token=None):
                 return True
     return False
 
+def list_new_contributors(owner, repo, days=30, token=None):
+    import requests
+    from datetime import datetime, timezone, timedelta
+    url = f"https://api.github.com/repos/{owner}/{repo}/contributors"
+    headers = {"Authorization": f"token {token}"} if token else {}
+    resp = requests.get(url, headers=headers)
+    new_contributors = []
+    if resp.status_code == 200:
+        for user in resp.json():
+            events_url = f"https://api.github.com/users/{user['login']}/events"
+            events_resp = requests.get(events_url, headers=headers)
+            if events_resp.status_code == 200:
+                for event in events_resp.json():
+                    if event["type"] == "PushEvent":
+                        created = datetime.strptime(event["created_at"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+                        if (datetime.now(timezone.utc) - created).days <= days:
+                            new_contributors.append(user["login"])
+                            break
+    return new_contributors
+
