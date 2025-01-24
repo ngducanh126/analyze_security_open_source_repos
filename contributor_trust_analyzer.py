@@ -54,3 +54,11 @@ def list_new_contributors(owner, repo, days=30, token=None):
                             break
     return new_contributors
 
+def get_contributor_first_commit_date(owner, repo, contributor, token=None):
+    commits = get_contributor_commits(owner, repo, contributor, token)
+    if commits:
+        from dateutil import parser
+        dates = [parser.parse(c["commit"]["author"]["date"]) for c in commits]
+        return min(dates)
+    return None
+
