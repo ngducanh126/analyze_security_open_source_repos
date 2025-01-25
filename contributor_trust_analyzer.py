@@ -62,3 +62,11 @@ def get_contributor_first_commit_date(owner, repo, contributor, token=None):
         return min(dates)
     return None
 
+def get_contributor_last_commit_date(owner, repo, contributor, token=None):
+    commits = get_contributor_commits(owner, repo, contributor, token)
+    if commits:
+        from dateutil import parser
+        dates = [parser.parse(c["commit"]["author"]["date"]) for c in commits]
+        return max(dates)
+    return None
+
