@@ -70,3 +70,7 @@ def get_contributor_last_commit_date(owner, repo, contributor, token=None):
         return max(dates)
     return None
 
+def get_contributor_commit_count(owner, repo, contributor, token=None):
+    commits = get_contributor_commits(owner, repo, contributor, token)
+    return len(commits)
+
