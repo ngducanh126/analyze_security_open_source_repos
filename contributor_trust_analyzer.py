@@ -74,3 +74,16 @@ def get_contributor_commit_count(owner, repo, contributor, token=None):
     commits = get_contributor_commits(owner, repo, contributor, token)
     return len(commits)
 
+def get_contributor_files_changed(owner, repo, contributor, token=None):
+    commits = get_contributor_commits(owner, repo, contributor, token)
+    files = set()
+    for commit in commits:
+        files_url = commit["url"] + "/files"
+        import requests
+        headers = {"Authorization": f"token {token}"} if token else {}
+        resp = requests.get(files_url, headers=headers)
+        if resp.status_code == 200:
+            for f in resp.json():
+                files.add(f["filename"])
+    return list(files)
+
