@@ -87,3 +87,10 @@ def get_contributor_files_changed(owner, repo, contributor, token=None):
                 files.add(f["filename"])
     return list(files)
 
+def is_new_contributor(owner, repo, contributor, days=30, token=None):
+    from datetime import datetime, timezone
+    first_commit = get_contributor_first_commit_date(owner, repo, contributor, token)
+    if first_commit:
+        return (datetime.now(timezone.utc) - first_commit).days <= days
+    return False
+
