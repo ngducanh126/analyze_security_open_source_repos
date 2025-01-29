@@ -94,3 +94,13 @@ def is_new_contributor(owner, repo, contributor, days=30, token=None):
         return (datetime.now(timezone.utc) - first_commit).days <= days
     return False
 
+def list_critical_changes_by_new_contributors(owner, repo, token=None):
+    new_contribs = list_new_contributors(owner, repo, token=token)
+    critical = get_critical_files()
+    result = []
+    for user in new_contribs:
+        files = get_contributor_files_changed(owner, repo, user, token)
+        if any(any(c in f for c in critical) for f in files):
+            result.append(user)
+    return result
+
