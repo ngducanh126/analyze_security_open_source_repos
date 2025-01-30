@@ -104,3 +104,11 @@ def list_critical_changes_by_new_contributors(owner, repo, token=None):
             result.append(user)
     return result
 
+def print_contributor_trust_report(owner, repo, token=None):
+    contributors = list_contributors(owner, repo, token)
+    for user in contributors:
+        name = user["login"]
+        count = get_contributor_commit_count(owner, repo, name, token)
+        new = is_new_contributor(owner, repo, name, token=token)
+        print(f"{name}: {count} commits, {'NEW' if new else 'ESTABLISHED'}")
+
