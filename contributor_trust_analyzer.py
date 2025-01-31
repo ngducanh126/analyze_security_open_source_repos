@@ -112,3 +112,8 @@ def print_contributor_trust_report(owner, repo, token=None):
         new = is_new_contributor(owner, repo, name, token=token)
         print(f"{name}: {count} commits, {'NEW' if new else 'ESTABLISHED'}")
 
+def print_critical_file_changes_by_new_contributors(owner, repo, token=None):
+    users = list_critical_changes_by_new_contributors(owner, repo, token)
+    for user in users:
+        print(f"New contributor {user} changed critical files")
+
