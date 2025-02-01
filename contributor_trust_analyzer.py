@@ -117,3 +117,9 @@ def print_critical_file_changes_by_new_contributors(owner, repo, token=None):
     for user in users:
         print(f"New contributor {user} changed critical files")
 
+def print_all_contributor_files(owner, repo, token=None):
+    contributors = list_contributors(owner, repo, token)
+    for user in contributors:
+        files = get_contributor_files_changed(owner, repo, user["login"], token)
+        print(f"{user['login']}: {files}")
+
