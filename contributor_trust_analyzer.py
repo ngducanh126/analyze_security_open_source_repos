@@ -123,3 +123,11 @@ def print_all_contributor_files(owner, repo, token=None):
         files = get_contributor_files_changed(owner, repo, user["login"], token)
         print(f"{user['login']}: {files}")
 
+def print_contributor_activity_summary(owner, repo, token=None):
+    contributors = list_contributors(owner, repo, token)
+    for user in contributors:
+        name = user["login"]
+        first = get_contributor_first_commit_date(owner, repo, name, token)
+        last = get_contributor_last_commit_date(owner, repo, name, token)
+        print(f"{name}: first commit {first}, last commit {last}")
+
