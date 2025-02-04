@@ -8,3 +8,13 @@ def find_world_readable_files(directory):
                 result.append(path)
     return result
 
+def find_sensitive_files(directory):
+    import os
+    sensitive = [".env", "id_rsa", "id_dsa", "private.pem", "config.json", "secrets.yml"]
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if f in sensitive:
+                found.append(os.path.join(root, f))
+    return found
+
