@@ -18,3 +18,9 @@ def find_sensitive_files(directory):
                 found.append(os.path.join(root, f))
     return found
 
+def check_file_in_gitignore(filename):
+    if not os.path.exists(".gitignore"):
+        return False
+    with open(".gitignore", "r", encoding="utf-8") as f:
+        return filename in f.read()
+
