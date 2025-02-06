@@ -24,3 +24,14 @@ def check_file_in_gitignore(filename):
     with open(".gitignore", "r", encoding="utf-8") as f:
         return filename in f.read()
 
+def list_files_with_weak_permissions(directory):
+    import os, stat
+    weak = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            path = os.path.join(root, f)
+            mode = os.stat(path).st_mode
+            if mode & stat.S_IWOTH or mode & stat.S_IXOTH:
+                weak.append(path)
+    return weak
+
