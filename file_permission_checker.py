@@ -35,3 +35,12 @@ def list_files_with_weak_permissions(directory):
                 weak.append(path)
     return weak
 
+def find_private_keys(directory):
+    import os
+    keys = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if f.endswith(".pem") or f.endswith(".key"):
+                keys.append(os.path.join(root, f))
+    return keys
+
