@@ -44,3 +44,13 @@ def find_private_keys(directory):
                 keys.append(os.path.join(root, f))
     return keys
 
+def check_sensitive_files_committed(directory):
+    import subprocess
+    sensitive = [".env", "id_rsa", "id_dsa", "private.pem", "config.json", "secrets.yml"]
+    result = []
+    for s in sensitive:
+        out = subprocess.run(["git", "ls-files", s], capture_output=True, text=True)
+        if out.stdout.strip():
+            result.append(s)
+    return result
+
