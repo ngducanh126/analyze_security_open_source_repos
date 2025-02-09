@@ -54,3 +54,8 @@ def check_sensitive_files_committed(directory):
             result.append(s)
     return result
 
+def check_file_permissions(filepath):
+    import os, stat
+    mode = os.stat(filepath).st_mode
+    return oct(mode)[-3:]
+
