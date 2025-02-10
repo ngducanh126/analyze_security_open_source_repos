@@ -59,3 +59,11 @@ def check_file_permissions(filepath):
     mode = os.stat(filepath).st_mode
     return oct(mode)[-3:]
 
+def list_all_files(directory):
+    import os
+    files = []
+    for root, dirs, fs in os.walk(directory):
+        for f in fs:
+            files.append(os.path.join(root, f))
+    return files
+
