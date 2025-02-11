@@ -67,3 +67,12 @@ def list_all_files(directory):
             files.append(os.path.join(root, f))
     return files
 
+def check_for_backup_files(directory):
+    import os
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if f.endswith("~") or f.endswith(".bak"):
+                found.append(os.path.join(root, f))
+    return found
+
