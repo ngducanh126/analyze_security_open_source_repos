@@ -76,3 +76,12 @@ def check_for_backup_files(directory):
                 found.append(os.path.join(root, f))
     return found
 
+def check_for_dotfiles(directory):
+    import os
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if f.startswith(".") and f not in [".gitignore", ".git"]:
+                found.append(os.path.join(root, f))
+    return found
+
