@@ -85,3 +85,13 @@ def check_for_dotfiles(directory):
                 found.append(os.path.join(root, f))
     return found
 
+def check_for_large_files(directory, size_mb=10):
+    import os
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            path = os.path.join(root, f)
+            if os.path.getsize(path) > size_mb * 1024 * 1024:
+                found.append(path)
+    return found
+
