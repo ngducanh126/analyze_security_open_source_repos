@@ -95,3 +95,13 @@ def check_for_large_files(directory, size_mb=10):
                 found.append(path)
     return found
 
+def check_for_symlinks(directory):
+    import os
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            path = os.path.join(root, f)
+            if os.path.islink(path):
+                found.append(path)
+    return found
+
