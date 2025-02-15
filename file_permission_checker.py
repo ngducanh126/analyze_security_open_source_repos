@@ -105,3 +105,13 @@ def check_for_symlinks(directory):
                 found.append(path)
     return found
 
+def check_for_executable_files(directory):
+    import os, stat
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            path = os.path.join(root, f)
+            if os.stat(path).st_mode & stat.S_IXUSR:
+                found.append(path)
+    return found
+
