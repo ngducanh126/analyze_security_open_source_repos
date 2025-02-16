@@ -115,3 +115,18 @@ def check_for_executable_files(directory):
                 found.append(path)
     return found
 
+def check_for_duplicate_files(directory):
+    import os, hashlib
+    hashes = {}
+    dups = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            path = os.path.join(root, f)
+            with open(path, "rb") as file:
+                h = hashlib.md5(file.read()).hexdigest()
+            if h in hashes:
+                dups.append((hashes[h], path))
+            else:
+                hashes[h] = path
+    return dups
+
