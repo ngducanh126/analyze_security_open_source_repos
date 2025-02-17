@@ -130,3 +130,13 @@ def check_for_duplicate_files(directory):
                 hashes[h] = path
     return dups
 
+def check_for_empty_files(directory):
+    import os
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            path = os.path.join(root, f)
+            if os.path.getsize(path) == 0:
+                found.append(path)
+    return found
+
