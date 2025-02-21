@@ -14,3 +14,6 @@ def check_contact_email_in_docs(readme_file):
         import re
         return bool(re.search(r"[\w\.-]+@[\w\.-]+", content))
 
+def check_security_policy_file():
+    return os.path.exists("SECURITY.md")
+
