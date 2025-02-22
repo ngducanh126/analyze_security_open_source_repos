@@ -17,3 +17,8 @@ def check_contact_email_in_docs(readme_file):
 def check_security_policy_file():
     return os.path.exists("SECURITY.md")
 
+def check_security_badge_in_readme(readme_file):
+    with open(readme_file, "r", encoding="utf-8") as f:
+        content = f.read().lower()
+        return "badge" in content and "security" in content
+
