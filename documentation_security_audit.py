@@ -22,3 +22,6 @@ def check_security_badge_in_readme(readme_file):
         content = f.read().lower()
         return "badge" in content and "security" in content
 
+def check_for_changelog():
+    return os.path.exists("CHANGELOG.md")
+
