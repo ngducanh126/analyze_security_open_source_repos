@@ -25,3 +25,6 @@ def check_security_badge_in_readme(readme_file):
 def check_for_changelog():
     return os.path.exists("CHANGELOG.md")
 
+def check_for_code_of_conduct():
+    return os.path.exists("CODE_OF_CONDUCT.md")
+
