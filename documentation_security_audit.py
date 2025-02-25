@@ -28,3 +28,6 @@ def check_for_changelog():
 def check_for_code_of_conduct():
     return os.path.exists("CODE_OF_CONDUCT.md")
 
+def check_for_contributing_guide():
+    return os.path.exists("CONTRIBUTING.md")
+
