@@ -31,3 +31,11 @@ def check_for_code_of_conduct():
 def check_for_contributing_guide():
     return os.path.exists("CONTRIBUTING.md")
 
+def check_for_security_labels_in_issues():
+    import requests
+    url = "https://api.github.com/repos/owner/repo/labels"
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        return any("security" in l["name"].lower() for l in resp.json())
+    return False
+
