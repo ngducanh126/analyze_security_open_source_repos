@@ -39,3 +39,6 @@ def check_for_security_labels_in_issues():
         return any("security" in l["name"].lower() for l in resp.json())
     return False
 
+def check_for_security_faq():
+    return os.path.exists("SECURITY_FAQ.md")
+
