@@ -42,3 +42,8 @@ def check_for_security_labels_in_issues():
 def check_for_security_faq():
     return os.path.exists("SECURITY_FAQ.md")
 
+def check_for_security_examples(readme_file):
+    with open(readme_file, "r", encoding="utf-8") as f:
+        content = f.read().lower()
+        return "example" in content and "security" in content
+
