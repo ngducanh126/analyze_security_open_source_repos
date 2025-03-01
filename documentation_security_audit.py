@@ -47,3 +47,8 @@ def check_for_security_examples(readme_file):
         content = f.read().lower()
         return "example" in content and "security" in content
 
+def check_for_security_toc(readme_file):
+    with open(readme_file, "r", encoding="utf-8") as f:
+        content = f.read().lower()
+        return "table of contents" in content and "security" in content
+
