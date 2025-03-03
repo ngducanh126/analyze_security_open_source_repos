@@ -55,3 +55,6 @@ def check_for_security_toc(readme_file):
 def check_for_security_glossary():
     return os.path.exists("SECURITY_GLOSSARY.md")
 
+def check_for_security_architecture_docs():
+    return os.path.exists("SECURITY_ARCHITECTURE.md")
+
