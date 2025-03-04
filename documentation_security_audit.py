@@ -58,3 +58,6 @@ def check_for_security_glossary():
 def check_for_security_architecture_docs():
     return os.path.exists("SECURITY_ARCHITECTURE.md")
 
+def check_for_security_training_docs():
+    return os.path.exists("SECURITY_TRAINING.md")
+
