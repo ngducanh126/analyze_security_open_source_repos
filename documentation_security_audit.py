@@ -61,3 +61,6 @@ def check_for_security_architecture_docs():
 def check_for_security_training_docs():
     return os.path.exists("SECURITY_TRAINING.md")
 
+def check_for_security_incident_response():
+    return os.path.exists("SECURITY_INCIDENT_RESPONSE.md")
+
