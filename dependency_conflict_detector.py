@@ -17,3 +17,13 @@ def parse_setup_py(setup_file):
         pkgs[match[0]] = match[1]
     return pkgs
 
+def parse_pipfile(pipfile):
+    with open(pipfile, "r", encoding="utf-8") as f:
+        lines = [l.strip() for l in f if l.strip() and not l.startswith("#")]
+    pkgs = {}
+    for line in lines:
+        if "=" in line and '"' in line:
+            pkg, ver = line.split("=")
+            pkgs[pkg.strip()] = ver.strip().replace('"','').replace("'",'')
+    return pkgs
+
