@@ -27,3 +27,11 @@ def parse_pipfile(pipfile):
             pkgs[pkg.strip()] = ver.strip().replace('"','').replace("'",'')
     return pkgs
 
+def find_conflicts(*dicts):
+    from collections import defaultdict
+    versions = defaultdict(set)
+    for d in dicts:
+        for pkg, ver in d.items():
+            versions[pkg].add(ver)
+    return {pkg: list(vers) for pkg, vers in versions.items() if len(vers) > 1}
+
