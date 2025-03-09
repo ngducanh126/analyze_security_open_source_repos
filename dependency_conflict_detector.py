@@ -35,3 +35,8 @@ def find_conflicts(*dicts):
             versions[pkg].add(ver)
     return {pkg: list(vers) for pkg, vers in versions.items() if len(vers) > 1}
 
+def check_requirements_vs_setup(requirements_file, setup_file):
+    reqs = parse_requirements(requirements_file)
+    setup = parse_setup_py(setup_file)
+    return find_conflicts(reqs, setup)
+
