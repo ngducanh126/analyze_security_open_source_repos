@@ -40,3 +40,8 @@ def check_requirements_vs_setup(requirements_file, setup_file):
     setup = parse_setup_py(setup_file)
     return find_conflicts(reqs, setup)
 
+def check_requirements_vs_pipfile(requirements_file, pipfile):
+    reqs = parse_requirements(requirements_file)
+    pip = parse_pipfile(pipfile)
+    return find_conflicts(reqs, pip)
+
