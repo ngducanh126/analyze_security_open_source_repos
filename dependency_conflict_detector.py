@@ -45,3 +45,8 @@ def check_requirements_vs_pipfile(requirements_file, pipfile):
     pip = parse_pipfile(pipfile)
     return find_conflicts(reqs, pip)
 
+def check_setup_vs_pipfile(setup_file, pipfile):
+    setup = parse_setup_py(setup_file)
+    pip = parse_pipfile(pipfile)
+    return find_conflicts(setup, pip)
+
