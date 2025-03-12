@@ -18,3 +18,14 @@ def check_binary_files_in_git(directory):
             result.append(line)
     return result
 
+def check_large_binary_files(directory, size_mb=5):
+    import os
+    exts = [".exe", ".dll", ".so", ".dylib", ".bin", ".o", ".a"]
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            path = os.path.join(root, f)
+            if any(f.lower().endswith(e) for e in exts) and os.path.getsize(path) > size_mb * 1024 * 1024:
+                found.append(path)
+    return found
+
