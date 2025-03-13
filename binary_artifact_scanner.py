@@ -29,3 +29,13 @@ def check_large_binary_files(directory, size_mb=5):
                 found.append(path)
     return found
 
+def check_for_unsigned_binaries(directory):
+    import os
+    exts = [".exe", ".dll", ".so", ".dylib"]
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if any(f.lower().endswith(e) for e in exts):
+                found.append(os.path.join(root, f))
+    return found
+
