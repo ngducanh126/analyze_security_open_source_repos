@@ -39,3 +39,16 @@ def check_for_unsigned_binaries(directory):
                 found.append(os.path.join(root, f))
     return found
 
+def check_for_stripped_binaries(directory):
+    import os, subprocess
+    exts = [".so", ".dll", ".exe"]
+    stripped = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if any(f.lower().endswith(e) for e in exts):
+                path = os.path.join(root, f)
+                out = subprocess.run(["file", path], capture_output=True, text=True)
+                if "not stripped" in out.stdout:
+                    stripped.append(path)
+    return stripped
+
