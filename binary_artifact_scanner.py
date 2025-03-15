@@ -52,3 +52,17 @@ def check_for_stripped_binaries(directory):
                     stripped.append(path)
     return stripped
 
+def check_for_embedded_scripts_in_binaries(directory):
+    import os
+    exts = [".exe", ".dll", ".so", ".dylib"]
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if any(f.lower().endswith(e) for e in exts):
+                path = os.path.join(root, f)
+                with open(path, "rb") as file:
+                    data = file.read()
+                    if b"#!/bin" in data:
+                        found.append(path)
+    return found
+
