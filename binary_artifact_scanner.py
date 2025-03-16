@@ -66,3 +66,13 @@ def check_for_embedded_scripts_in_binaries(directory):
                         found.append(path)
     return found
 
+def check_for_nonstandard_binaries(directory):
+    import os
+    exts = [".bin", ".dat", ".img"]
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if any(f.lower().endswith(e) for e in exts):
+                found.append(os.path.join(root, f))
+    return found
+
