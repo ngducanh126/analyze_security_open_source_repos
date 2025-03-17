@@ -76,3 +76,13 @@ def check_for_nonstandard_binaries(directory):
                 found.append(os.path.join(root, f))
     return found
 
+def check_for_binary_files_in_history():
+    import subprocess
+    exts = [".exe", ".dll", ".so", ".dylib", ".bin", ".o", ".a"]
+    found = []
+    out = subprocess.run(["git", "log", "--pretty=format:", "--name-only"], capture_output=True, text=True)
+    for line in out.stdout.splitlines():
+        if any(line.lower().endswith(e) for e in exts):
+            found.append(line)
+    return list(set(found))
+
