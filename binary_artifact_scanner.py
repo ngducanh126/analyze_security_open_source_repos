@@ -86,3 +86,12 @@ def check_for_binary_files_in_history():
             found.append(line)
     return list(set(found))
 
+def check_for_binary_files_in_releases():
+    import os
+    found = []
+    if os.path.exists("dist"):
+        for f in os.listdir("dist"):
+            if any(f.lower().endswith(e) for e in [".exe", ".dll", ".so", ".dylib", ".bin"]):
+                found.append(os.path.join("dist", f))
+    return found
+
