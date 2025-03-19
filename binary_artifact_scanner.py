@@ -95,3 +95,12 @@ def check_for_binary_files_in_releases():
                 found.append(os.path.join("dist", f))
     return found
 
+def check_for_binary_files_in_assets():
+    import os
+    found = []
+    if os.path.exists("assets"):
+        for f in os.listdir("assets"):
+            if any(f.lower().endswith(e) for e in [".exe", ".dll", ".so", ".dylib", ".bin"]):
+                found.append(os.path.join("assets", f))
+    return found
+
