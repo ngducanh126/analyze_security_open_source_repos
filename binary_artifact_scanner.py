@@ -114,3 +114,13 @@ def check_for_binary_files_in_docs():
                     found.append(os.path.join(root, f))
     return found
 
+def check_for_binary_files_in_examples():
+    import os
+    found = []
+    if os.path.exists("examples"):
+        for root, dirs, files in os.walk("examples"):
+            for f in files:
+                if any(f.lower().endswith(e) for e in [".exe", ".dll", ".so", ".dylib", ".bin"]):
+                    found.append(os.path.join(root, f))
+    return found
+
