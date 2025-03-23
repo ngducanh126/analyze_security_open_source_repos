@@ -134,3 +134,8 @@ def check_for_binary_files_in_tests():
                     found.append(os.path.join(root, f))
     return found
 
+def print_all_binary_artifacts(directory):
+    files = find_binary_files(directory)
+    for f in files:
+        print(f)
+
