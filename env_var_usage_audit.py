@@ -63,3 +63,17 @@ def find_env_var_in_dockerfiles(directory):
                             found.append((path, i+1, line.strip()))
     return found
 
+def find_env_var_in_tests(directory):
+    import os
+    found = []
+    if os.path.exists("tests"):
+        for root, dirs, files in os.walk("tests"):
+            for f in files:
+                if f.endswith(".py"):
+                    path = os.path.join(root, f)
+                    with open(path, "r", encoding="utf-8") as file:
+                        for i, line in enumerate(file):
+                            if "os.environ" in line:
+                                found.append((path, i+1, line.strip()))
+    return found
+
