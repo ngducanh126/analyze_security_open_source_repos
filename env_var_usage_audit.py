@@ -91,3 +91,17 @@ def find_env_var_in_examples(directory):
                                 found.append((path, i+1, line.strip()))
     return found
 
+def find_env_var_in_docs(directory):
+    import os
+    found = []
+    if os.path.exists("docs"):
+        for root, dirs, files in os.walk("docs"):
+            for f in files:
+                if f.endswith(".md") or f.endswith(".rst"):
+                    path = os.path.join(root, f)
+                    with open(path, "r", encoding="utf-8") as file:
+                        for i, line in enumerate(file):
+                            if "SECRET" in line or "TOKEN" in line:
+                                found.append((path, i+1, line.strip()))
+    return found
+
