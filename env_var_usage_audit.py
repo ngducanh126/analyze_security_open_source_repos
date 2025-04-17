@@ -105,3 +105,13 @@ def find_env_var_in_docs(directory):
                                 found.append((path, i+1, line.strip()))
     return found
 
+def print_env_var_usage_report(directory):
+    print("Python code:", find_env_var_usage_in_code(directory))
+    print("Shell exports:", find_env_var_exports_in_code(directory))
+    print("Logging env vars:", find_env_var_logging(directory))
+    print("Config files:", find_env_var_in_config_files(directory))
+    print("Dockerfiles:", find_env_var_in_dockerfiles(directory))
+    print("Tests:", find_env_var_in_tests(directory))
+    print("Examples:", find_env_var_in_examples(directory))
+    print("Docs:", find_env_var_in_docs(directory))
+
