@@ -115,3 +115,16 @@ def print_env_var_usage_report(directory):
     print("Examples:", find_env_var_in_examples(directory))
     print("Docs:", find_env_var_in_docs(directory))
 
+def find_env_var_in_ci_configs(directory):
+    import os
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if f.endswith(".yml") or f.endswith(".yaml"):
+                path = os.path.join(root, f)
+                with open(path, "r", encoding="utf-8") as file:
+                    for i, line in enumerate(file):
+                        if "SECRET" in line or "TOKEN" in line:
+                            found.append((path, i+1, line.strip()))
+    return found
+
