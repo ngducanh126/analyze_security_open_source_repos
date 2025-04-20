@@ -141,3 +141,16 @@ def find_env_var_in_makefiles(directory):
                             found.append((path, i+1, line.strip()))
     return found
 
+def find_env_var_in_setup_py(directory):
+    import os
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if f == "setup.py":
+                path = os.path.join(root, f)
+                with open(path, "r", encoding="utf-8") as file:
+                    for i, line in enumerate(file):
+                        if "os.environ" in line:
+                            found.append((path, i+1, line.strip()))
+    return found
+
