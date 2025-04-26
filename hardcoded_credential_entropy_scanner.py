@@ -11,3 +11,6 @@ def shannon_entropy(data):
         entropy -= p * log2(p)
     return entropy
 
+def is_high_entropy_string(s, threshold=4.5):
+    return shannon_entropy(s) > threshold
+
