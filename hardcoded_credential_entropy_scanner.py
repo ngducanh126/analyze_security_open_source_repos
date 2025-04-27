@@ -14,3 +14,12 @@ def shannon_entropy(data):
 def is_high_entropy_string(s, threshold=4.5):
     return shannon_entropy(s) > threshold
 
+def find_high_entropy_strings_in_file(filepath, threshold=4.5, min_length=20):
+    found = []
+    with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
+        for i, line in enumerate(f):
+            for word in line.strip().split():
+                if len(word) >= min_length and is_high_entropy_string(word, threshold):
+                    found.append((i+1, word))
+    return found
+
