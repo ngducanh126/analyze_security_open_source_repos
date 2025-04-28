@@ -50,3 +50,16 @@ def find_css_without_sri(directory):
                             found.append((path, i+1, line.strip()))
     return found
 
+def find_external_scripts_in_js(directory):
+    import os
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if f.endswith(".js"):
+                path = os.path.join(root, f)
+                with open(path, "r", encoding="utf-8") as file:
+                    for i, line in enumerate(file):
+                        if "http" in line and ".js" in line:
+                            found.append((path, i+1, line.strip()))
+    return found
+
