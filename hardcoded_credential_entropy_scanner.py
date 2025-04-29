@@ -35,3 +35,10 @@ def scan_directory_for_high_entropy_strings(directory, threshold=4.5, min_length
                     results.append((path, res))
     return results
 
+def print_entropy_scan_report(directory):
+    results = scan_directory_for_high_entropy_strings(directory)
+    for path, items in results:
+        print(f"{path}:")
+        for line, word in items:
+            print(f"  Line {line}: {word}")
+
