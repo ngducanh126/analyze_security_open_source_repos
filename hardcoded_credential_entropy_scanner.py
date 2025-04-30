@@ -42,3 +42,11 @@ def print_entropy_scan_report(directory):
         for line, word in items:
             print(f"  Line {line}: {word}")
 
+def find_possible_secrets_in_file(filepath):
+    found = []
+    with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
+        for i, line in enumerate(f):
+            if "key" in line.lower() or "secret" in line.lower() or "token" in line.lower():
+                found.append((i+1, line.strip()))
+    return found
+
