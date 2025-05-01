@@ -50,3 +50,15 @@ def find_possible_secrets_in_file(filepath):
                 found.append((i+1, line.strip()))
     return found
 
+def scan_directory_for_possible_secrets(directory):
+    import os
+    results = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if f.endswith(".py") or f.endswith(".env") or f.endswith(".txt"):
+                path = os.path.join(root, f)
+                res = find_possible_secrets_in_file(path)
+                if res:
+                    results.append((path, res))
+    return results
+
