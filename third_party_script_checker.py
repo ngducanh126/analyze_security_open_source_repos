@@ -102,3 +102,13 @@ def find_external_scripts_in_templates(directory):
                             found.append((path, i+1, line.strip()))
     return found
 
+def print_external_script_report(directory):
+    print("HTML scripts:", find_external_scripts_in_html(directory))
+    print("Scripts without SRI:", find_scripts_without_sri(directory))
+    print("External CSS:", find_external_css_in_html(directory))
+    print("CSS without SRI:", find_css_without_sri(directory))
+    print("External JS in JS files:", find_external_scripts_in_js(directory))
+    print("External scripts in markdown:", find_external_scripts_in_markdown(directory))
+    print("External scripts in notebooks:", find_external_scripts_in_notebooks(directory))
+    print("External scripts in templates:", find_external_scripts_in_templates(directory))
+
