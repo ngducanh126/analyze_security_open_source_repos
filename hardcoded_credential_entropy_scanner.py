@@ -69,3 +69,13 @@ def print_possible_secrets_report(directory):
         for line, text in items:
             print(f"  Line {line}: {text}")
 
+def find_high_entropy_env_vars(filepath, threshold=4.5, min_length=20):
+    found = []
+    with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
+        for i, line in enumerate(f):
+            if "=" in line:
+                key, val = line.strip().split("=", 1)
+                if len(val) >= min_length and is_high_entropy_string(val, threshold):
+                    found.append((i+1, key, val))
+    return found
+
