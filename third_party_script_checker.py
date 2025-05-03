@@ -112,3 +112,16 @@ def print_external_script_report(directory):
     print("External scripts in notebooks:", find_external_scripts_in_notebooks(directory))
     print("External scripts in templates:", find_external_scripts_in_templates(directory))
 
+def find_external_scripts_in_yaml(directory):
+    import os
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if f.endswith(".yml") or f.endswith(".yaml"):
+                path = os.path.join(root, f)
+                with open(path, "r", encoding="utf-8") as file:
+                    for i, line in enumerate(file):
+                        if "<script" in line and "src=" in line:
+                            found.append((path, i+1, line.strip()))
+    return found
+
