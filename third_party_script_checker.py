@@ -125,3 +125,16 @@ def find_external_scripts_in_yaml(directory):
                             found.append((path, i+1, line.strip()))
     return found
 
+def find_external_scripts_in_config(directory):
+    import os
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if f.endswith(".conf") or f.endswith(".ini"):
+                path = os.path.join(root, f)
+                with open(path, "r", encoding="utf-8") as file:
+                    for i, line in enumerate(file):
+                        if "<script" in line and "src=" in line:
+                            found.append((path, i+1, line.strip()))
+    return found
+
