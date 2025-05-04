@@ -79,3 +79,15 @@ def find_high_entropy_env_vars(filepath, threshold=4.5, min_length=20):
                     found.append((i+1, key, val))
     return found
 
+def scan_env_files_for_high_entropy(directory, threshold=4.5, min_length=20):
+    import os
+    results = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if f.endswith(".env"):
+                path = os.path.join(root, f)
+                res = find_high_entropy_env_vars(path, threshold, min_length)
+                if res:
+                    results.append((path, res))
+    return results
+
