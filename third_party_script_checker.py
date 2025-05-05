@@ -138,3 +138,13 @@ def find_external_scripts_in_config(directory):
                             found.append((path, i+1, line.strip()))
     return found
 
+def find_external_scripts_in_readme(directory):
+    import os
+    found = []
+    if os.path.exists("README.md"):
+        with open("README.md", "r", encoding="utf-8") as file:
+            for i, line in enumerate(file):
+                if "<script" in line and "src=" in line:
+                    found.append(("README.md", i+1, line.strip()))
+    return found
+
