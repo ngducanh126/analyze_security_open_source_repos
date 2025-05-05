@@ -91,3 +91,10 @@ def scan_env_files_for_high_entropy(directory, threshold=4.5, min_length=20):
                     results.append((path, res))
     return results
 
+def print_env_entropy_report(directory):
+    results = scan_env_files_for_high_entropy(directory)
+    for path, items in results:
+        print(f"{path}:")
+        for line, key, val in items:
+            print(f"  Line {line}: {key} = {val}")
+
