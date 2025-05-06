@@ -98,3 +98,13 @@ def print_env_entropy_report(directory):
         for line, key, val in items:
             print(f"  Line {line}: {key} = {val}")
 
+def find_high_entropy_strings_in_git_history(filepath, threshold=4.5, min_length=20):
+    import subprocess
+    found = []
+    out = subprocess.run(["git", "log", "-p", filepath], capture_output=True, text=True)
+    for i, line in enumerate(out.stdout.splitlines()):
+        for word in line.strip().split():
+            if len(word) >= min_length and is_high_entropy_string(word, threshold):
+                found.append((i+1, word))
+    return found
+
