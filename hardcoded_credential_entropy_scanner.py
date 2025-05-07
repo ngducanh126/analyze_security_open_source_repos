@@ -108,3 +108,8 @@ def find_high_entropy_strings_in_git_history(filepath, threshold=4.5, min_length
                 found.append((i+1, word))
     return found
 
+def scan_repo_for_hardcoded_secrets(directory):
+    entropy_results = scan_directory_for_high_entropy_strings(directory)
+    possible_secrets = scan_directory_for_possible_secrets(directory)
+    return {"entropy": entropy_results, "possible": possible_secrets}
+
