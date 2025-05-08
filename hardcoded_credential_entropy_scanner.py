@@ -113,3 +113,16 @@ def scan_repo_for_hardcoded_secrets(directory):
     possible_secrets = scan_directory_for_possible_secrets(directory)
     return {"entropy": entropy_results, "possible": possible_secrets}
 
+def print_full_secret_scan_report(directory):
+    results = scan_repo_for_hardcoded_secrets(directory)
+    print("High entropy strings:")
+    for path, items in results["entropy"]:
+        print(f"{path}:")
+        for line, word in items:
+            print(f"  Line {line}: {word}")
+    print("Possible secrets by keyword:")
+    for path, items in results["possible"]:
+        print(f"{path}:")
+        for line, text in items:
+            print(f"  Line {line}: {text}")
+
