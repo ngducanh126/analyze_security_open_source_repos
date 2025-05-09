@@ -126,3 +126,17 @@ def print_full_secret_scan_report(directory):
         for line, text in items:
             print(f"  Line {line}: {text}")
 
+def find_high_entropy_strings_in_notebooks(directory, threshold=4.5, min_length=20):
+    import os
+    found = []
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            if f.endswith(".ipynb"):
+                path = os.path.join(root, f)
+                with open(path, "r", encoding="utf-8", errors="ignore") as file:
+                    for i, line in enumerate(file):
+                        for word in line.strip().split():
+                            if len(word) >= min_length and is_high_entropy_string(word, threshold):
+                                found.append((path, i+1, word))
+    return found
+
