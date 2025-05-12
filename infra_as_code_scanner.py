@@ -27,3 +27,10 @@ def find_pulumi_files(directory):
                     found.append(os.path.join(root, f))
     return found
 
+def check_for_open_security_groups_tf(tf_file):
+    with open(tf_file, "r", encoding="utf-8") as f:
+        for line in f:
+            if "0.0.0.0/0" in line:
+                return True
+    return False
+
