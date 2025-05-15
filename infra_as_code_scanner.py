@@ -48,3 +48,10 @@ def check_for_open_security_groups_cfn(cfn_file):
                 return True
     return False
 
+def check_for_wildcard_iam_roles_cfn(cfn_file):
+    with open(cfn_file, "r", encoding="utf-8") as f:
+        for line in f:
+            if '"*" in' in line or "'*' in" in line:
+                return True
+    return False
+
