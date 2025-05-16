@@ -55,3 +55,10 @@ def check_for_wildcard_iam_roles_cfn(cfn_file):
                 return True
     return False
 
+def check_for_open_security_groups_pulumi(pulumi_file):
+    with open(pulumi_file, "r", encoding="utf-8") as f:
+        for line in f:
+            if "0.0.0.0/0" in line:
+                return True
+    return False
+
