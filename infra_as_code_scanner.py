@@ -69,3 +69,8 @@ def check_for_wildcard_iam_roles_pulumi(pulumi_file):
                 return True
     return False
 
+def print_infra_as_code_report(directory):
+    print("Terraform files:", find_terraform_files(directory))
+    print("CloudFormation files:", find_cloudformation_files(directory))
+    print("Pulumi files:", find_pulumi_files(directory))
+
