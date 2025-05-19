@@ -74,3 +74,10 @@ def print_infra_as_code_report(directory):
     print("CloudFormation files:", find_cloudformation_files(directory))
     print("Pulumi files:", find_pulumi_files(directory))
 
+def check_for_unencrypted_storage_tf(tf_file):
+    with open(tf_file, "r", encoding="utf-8") as f:
+        for line in f:
+            if "unencrypted" in line or "encryption = false" in line:
+                return True
+    return False
+
