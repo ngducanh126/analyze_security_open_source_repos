@@ -81,3 +81,10 @@ def check_for_unencrypted_storage_tf(tf_file):
                 return True
     return False
 
+def check_for_unencrypted_storage_cfn(cfn_file):
+    with open(cfn_file, "r", encoding="utf-8") as f:
+        for line in f:
+            if "unencrypted" in line or "Encryption: false" in line:
+                return True
+    return False
+
