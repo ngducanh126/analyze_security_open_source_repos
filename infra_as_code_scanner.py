@@ -88,3 +88,10 @@ def check_for_unencrypted_storage_cfn(cfn_file):
                 return True
     return False
 
+def check_for_unencrypted_storage_pulumi(pulumi_file):
+    with open(pulumi_file, "r", encoding="utf-8") as f:
+        for line in f:
+            if "unencrypted" in line or "encryption=False" in line:
+                return True
+    return False
+
