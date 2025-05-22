@@ -95,3 +95,10 @@ def check_for_unencrypted_storage_pulumi(pulumi_file):
                 return True
     return False
 
+def check_for_public_buckets_tf(tf_file):
+    with open(tf_file, "r", encoding="utf-8") as f:
+        for line in f:
+            if "public = true" in line:
+                return True
+    return False
+
