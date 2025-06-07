@@ -200,3 +200,8 @@ if __name__ == "__main__":
     for pr in prs:
         pr_with_security_review_comments(owner, repo, pr['number'], token)
 
+    print("Review time for all PRs:")
+    prs = fetch_pull_requests(owner, repo, state='all', token=token)
+    for pr in prs:
+        pr_review_time(owner, repo, pr['number'], token)
+
